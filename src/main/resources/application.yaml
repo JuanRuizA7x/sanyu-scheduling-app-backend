@@ -13,3 +13,10 @@ spring:
         dialect: org.hibernate.dialect.OracleDialect
     hibernate:
       ddl-auto: validate
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui
