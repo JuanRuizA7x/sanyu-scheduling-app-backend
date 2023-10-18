@@ -1,6 +1,9 @@
 package com.segurosbolivar.sanyuschedulingapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,21 +20,30 @@ import java.time.LocalDateTime;
 public class ScheduleEntity {
 
     @Id
-    @Column(name = "schedule_id")
+    @Column(name = "SCHEDULE_ID")
     private Long scheduleId;
-    @Column(length = 50, nullable = false)
+    @NotBlank
+    @Size(max = 50)
     private String name;
-    @Column(name = "start_time", length = 5, nullable = false)
+    @NotBlank
+    @Size(max = 5)
+    @Column(name = "START_TIME")
     private String startTime;
-    @Column(name = "end_time", length = 5, nullable = false)
+    @NotBlank
+    @Size(max = 5)
+    @Column(name = "END_TIME")
     private String endTime;
-    @Column(name = "break_start_time", length = 5)
+    @Size(max = 5)
+    @Column(name = "BREAK_START_TIME")
     private String breakStartTime;
-    @Column(name = "break_end_time", length = 5)
+    @Size(max = 5)
+    @Column(name = "BREAK_END_TIME")
     private String breakEndTime;
-    @Column(name = "creation_date", nullable = false)
+    @NotNull
+    @Column(name = "CREATION_DATE")
     private LocalDateTime creationDate;
-    @Column(name = "last_modification_date", nullable = false)
+    @NotNull
+    @Column(name = "LAST_MODIFICATION_DATE")
     private LocalDateTime lastModificationDate;
 
 }

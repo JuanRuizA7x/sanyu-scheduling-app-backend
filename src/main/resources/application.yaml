@@ -13,10 +13,18 @@ spring:
         dialect: org.hibernate.dialect.OracleDialect
     hibernate:
       ddl-auto: validate
+  security:
+    user:
+      name: admin
+      password: 12345
 
 springdoc:
   api-docs:
     enabled: true
   swagger-ui:
     enabled: true
-    path: /doc/swagger-ui
+    path: /api/doc/swagger-ui
+
+logging:
+  level:
+    org.springframework.security: DEBUG

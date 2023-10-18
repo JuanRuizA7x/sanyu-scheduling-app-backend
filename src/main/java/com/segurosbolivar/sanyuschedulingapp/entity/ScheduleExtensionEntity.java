@@ -1,6 +1,9 @@
 package com.segurosbolivar.sanyuschedulingapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,20 +20,28 @@ import java.time.LocalDateTime;
 public class ScheduleExtensionEntity {
 
     @Id
-    @Column(name = "schedule_extension_id")
+    @Column(name = "SCHEDULE_EXTENSION_ID")
     private Long scheduleExtensionId;
-    @Column(name = "start_time", length = 5, nullable = false)
+    @NotBlank
+    @Size(max = 5)
+    @Column(name = "START_TIME")
     private String startTime;
-    @Column(name = "end_time", length = 5, nullable = false)
+    @NotBlank
+    @Size(max = 5)
+    @Column(name = "END_TIME")
     private String endTime;
-    @Column(length = 500, nullable = false)
+    @NotBlank
+    @Size(max = 500)
     private String reason;
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "work_shift_id", nullable = false)
+    @JoinColumn(name = "WORK_SHIFT_ID")
     private WorkShiftEntity workShift;
-    @Column(name = "creation_date", nullable = false)
+    @NotNull
+    @Column(name = "CREATION_DATE")
     private LocalDateTime creationDate;
-    @Column(name = "last_modification_date", nullable = false)
+    @NotNull
+    @Column(name = "LAST_MODIFICATION_DATE")
     private LocalDateTime lastModificationDate;
 
 }

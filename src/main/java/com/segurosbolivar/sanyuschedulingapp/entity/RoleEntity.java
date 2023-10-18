@@ -1,6 +1,9 @@
 package com.segurosbolivar.sanyuschedulingapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,15 +20,18 @@ import java.time.LocalDateTime;
 public class RoleEntity {
 
     @Id
-    @Column(name = "role_id")
+    @Column(name = "ROLE_ID")
     private Long roleId;
-    @Column(length = 50, nullable = false)
+    @NotBlank
+    @Size(max = 50)
     private String name;
-    @Column(length = 255)
+    @Size(max = 255)
     private String description;
-    @Column(name = "creation_date", nullable = false)
+    @NotNull
+    @Column(name = "CREATION_DATE")
     private LocalDateTime creationDate;
-    @Column(name = "last_modification_date", nullable = false)
+    @NotNull
+    @Column(name = "LAST_MODIFICATION_DATE")
     private LocalDateTime lastModificationDate;
 
 }

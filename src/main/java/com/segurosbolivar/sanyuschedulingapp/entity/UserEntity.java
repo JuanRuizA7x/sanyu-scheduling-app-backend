@@ -1,6 +1,10 @@
 package com.segurosbolivar.sanyuschedulingapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,33 +21,49 @@ import java.time.LocalDateTime;
 public class UserEntity {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "USER_ID")
     private Long userId;
-    @Column(name = "first_name", length = 50, nullable = false)
+    @NotBlank
+    @Size(max = 50)
+    @Column(name = "FIRST_NAME")
     private String firstName;
-    @Column(name = "middle_name", length = 50)
+    @Size(max = 50)
+    @Column(name = "MIDDLE_NAME")
     private String middleName;
-    @Column(name = "last_name", length = 50, nullable = false)
+    @NotBlank
+    @Size(max = 50)
+    @Column(name = "LAST_NAME")
     private String lastName;
-    @Column(name = "second_last_name", length = 50)
+    @Size(max = 50)
+    @Column(name = "SECOND_LAST_NAME", length = 50)
     private String secondLastName;
+    @NotBlank
     @ManyToOne
-    @JoinColumn(name = "identification_type_id", nullable = false)
+    @JoinColumn(name = "IDENTIFICATION_TYPE_ID", nullable = false)
     private IdentificationTypeEntity identificationType;
-    @Column(name = "identification_number", length = 50, nullable = false)
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "IDENTIFICATION_NUMBER")
     private String identificationNumber;
-    @Column(length = 50, nullable = false)
+    @Email
+    @NotBlank
+    @Size(max = 50)
     private String email;
-    @Column(length = 50, nullable = false)
+    @NotBlank
+    @Size(max = 50)
     private String password;
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
+    @JoinColumn(name = "ROLE_ID")
     private RoleEntity role;
-    @Column(name = "is_active", nullable = false)
+    @NotNull
+    @Column(name = "IS_ACTIVE")
     private Boolean isActive;
-    @Column(name = "creation_date", nullable = false)
+    @NotNull
+    @Column(name = "CREATION_DATE")
     private LocalDateTime creationDate;
-    @Column(name = "last_modification_date", nullable = false)
+    @NotNull
+    @Column(name = "LAST_MODIFICATION_DATE")
     private LocalDateTime lastModificationDate;
 
 }
