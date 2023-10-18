@@ -1,6 +1,9 @@
 package com.segurosbolivar.sanyuschedulingapp.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -26,17 +29,17 @@ public class ScheduleEntity {
     @Size(max = 50)
     private String name;
     @NotBlank
-    @Size(max = 5)
+    @Size(min = 5, max = 5)
     @Column(name = "START_TIME")
     private String startTime;
     @NotBlank
-    @Size(max = 5)
+    @Size(min = 5, max = 5)
     @Column(name = "END_TIME")
     private String endTime;
-    @Size(max = 5)
+    @Size(min = 5, max = 5)
     @Column(name = "BREAK_START_TIME")
     private String breakStartTime;
-    @Size(max = 5)
+    @Size(min = 5, max = 5)
     @Column(name = "BREAK_END_TIME")
     private String breakEndTime;
     @NotNull

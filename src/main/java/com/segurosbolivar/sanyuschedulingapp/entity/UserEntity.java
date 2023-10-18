@@ -42,15 +42,15 @@ public class UserEntity {
     @JoinColumn(name = "IDENTIFICATION_TYPE_ID", nullable = false)
     private IdentificationTypeEntity identificationType;
     @NotNull
-    @Size(max = 50)
+    @Size(max = 20)
     @Column(name = "IDENTIFICATION_NUMBER")
     private String identificationNumber;
     @Email
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 100)
     private String email;
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 100)
     private String password;
     @NotNull
     @ManyToOne

@@ -23,11 +23,11 @@ public class ScheduleExtensionEntity {
     @Column(name = "SCHEDULE_EXTENSION_ID")
     private Long scheduleExtensionId;
     @NotBlank
-    @Size(max = 5)
+    @Size(min = 5, max = 5)
     @Column(name = "START_TIME")
     private String startTime;
     @NotBlank
-    @Size(max = 5)
+    @Size(min = 5, max = 5)
     @Column(name = "END_TIME")
     private String endTime;
     @NotBlank

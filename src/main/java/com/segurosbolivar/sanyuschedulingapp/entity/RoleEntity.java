@@ -24,7 +24,8 @@ public class RoleEntity {
     private Long roleId;
     @NotBlank
     @Size(max = 50)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum name;
     @Size(max = 255)
     private String description;
     @NotNull
