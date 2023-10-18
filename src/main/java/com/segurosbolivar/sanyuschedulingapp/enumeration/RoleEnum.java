@@ -1,5 +1,8 @@
-package com.segurosbolivar.sanyuschedulingapp.entity;
+package com.segurosbolivar.sanyuschedulingapp.enumeration;
 
+import lombok.Getter;
+
+@Getter
 public enum RoleEnum {
 
     ADMINISTRATOR("Administrador"),
@@ -9,10 +12,6 @@ public enum RoleEnum {
 
     RoleEnum(String description) {
         this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
 }

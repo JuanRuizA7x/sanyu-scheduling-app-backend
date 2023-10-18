@@ -27,9 +27,9 @@ public class SecurityConfiguration {
                         .loginPage("/api/auth/login")
                         .permitAll()
                 )*/
-                .sessionManagement(session -> session
+                /**.sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                )*/
                 .rememberMe(Customizer.withDefaults())
                 .build();
     }
