@@ -1,9 +1,11 @@
 package com.segurosbolivar.sanyuschedulingapp.controller;
 
 import com.segurosbolivar.sanyuschedulingapp.dto.IdentificationTypeResponseDTO;
+import com.segurosbolivar.sanyuschedulingapp.enumeration.RoleEnum;
 import com.segurosbolivar.sanyuschedulingapp.service.IIdentificationTypeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,7 @@ public class IdentificationTypeController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole(T(com.segurosbolivar.sanyuschedulingapp.enumeration.RoleEnum).ADMINISTRATOR.getDescription())")
     public ResponseEntity<List<IdentificationTypeResponseDTO>> getHelloWorld() {
         List<IdentificationTypeResponseDTO> response = this.identificationTypeService.findAll();
         return new ResponseEntity<List<IdentificationTypeResponseDTO>>(response, HttpStatus.OK);

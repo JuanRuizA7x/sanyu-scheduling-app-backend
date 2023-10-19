@@ -28,3 +28,7 @@ springdoc:
 logging:
   level:
     org.springframework.security: DEBUG
+
+jwt:
+  secret-key: 4d09f09234bfeb36d04306763a1d2880389c279ff37d12db00efd69f52cb24b2
+  expiration-time: 86400000
