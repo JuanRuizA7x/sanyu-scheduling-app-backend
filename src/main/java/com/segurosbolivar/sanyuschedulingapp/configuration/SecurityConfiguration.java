@@ -4,11 +4,13 @@ import com.segurosbolivar.sanyuschedulingapp.security.JwtAuthenticationFilter;
 import com.segurosbolivar.sanyuschedulingapp.security.JwtAuthorizationFilter;
 import com.segurosbolivar.sanyuschedulingapp.security.JwtProvider;
 import com.segurosbolivar.sanyuschedulingapp.service.UserDetailsServiceImpl;
+import com.segurosbolivar.sanyuschedulingapp.util.NoOpPasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,6 +27,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
     private final String LOGIN_PATH = "/api/auth/login";
+    private final String SWAGGER_UI_PATH = "/api/doc/swagger-ui/**";
+    private final String SWAGGER_API_DOCS_PATH = "/v3/api-docs/**";
     private final JwtProvider jwtProvider;
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
@@ -51,8 +55,11 @@ public class SecurityConfiguration {
 
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(this.LOGIN_PATH).permitAll()
+                        .requestMatchers(this.SWAGGER_UI_PATH).permitAll()
+                        .requestMatchers(this.SWAGGER_API_DOCS_PATH).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
@@ -74,10 +81,14 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        //Encriptador personalizado que devuelve la contraseña sin encriptar para facilitar las pruebas
-        //return new NoOpPasswordEncoder();
         return new BCryptPasswordEncoder();
     }
+
+    //Encriptador personalizado que devuelve la contraseña sin encriptar para facilitar las pruebas
+    /**@Bean
+    public PasswordEncoder passwordEncoder() {
+        return new NoOpPasswordEncoder();
+    }*/
 
     // Se ejecuta de manera individual para encriptar la contraseña que se desee
     public static void main(String[] args) {

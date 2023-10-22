@@ -37,7 +37,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         String tokenHeader = request.getHeader("Authorization");
 
-        if(!tokenHeader.isBlank() && tokenHeader.startsWith("Bearer ")) {
+        if(tokenHeader != null && tokenHeader.startsWith("Bearer ")) {
 
             String token = tokenHeader.replace("Bearer ", "");
 

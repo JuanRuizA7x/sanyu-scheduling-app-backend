@@ -13,10 +13,6 @@ spring:
         dialect: org.hibernate.dialect.OracleDialect
     hibernate:
       ddl-auto: validate
-  security:
-    user:
-      name: admin
-      password: 12345
 
 springdoc:
   api-docs:
@@ -25,10 +21,13 @@ springdoc:
     enabled: true
     path: /api/doc/swagger-ui
 
-logging:
-  level:
-    org.springframework.security: DEBUG
-
 jwt:
   secret-key: 4d09f09234bfeb36d04306763a1d2880389c279ff37d12db00efd69f52cb24b2
   expiration-time: 86400000
+
+frontend:
+  url: http://localhost:4200
+
+logging:
+  level:
+    org.springframework.security: DEBUG
