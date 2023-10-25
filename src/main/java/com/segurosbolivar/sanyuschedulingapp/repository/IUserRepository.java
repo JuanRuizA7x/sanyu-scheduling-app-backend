@@ -52,7 +52,7 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
                     """,
             nativeQuery = true
     )
-    List<UserEntity> findAvailableContractorsByDateRange(
+    List<UserEntity> findAvailableContractorsByRoleDateRange(
             @Param("roleId") Long roleId,
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate

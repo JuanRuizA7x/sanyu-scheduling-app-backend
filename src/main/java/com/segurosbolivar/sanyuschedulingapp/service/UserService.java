@@ -58,7 +58,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<UserResponseDTO> findAvailableContractorsByDateRange(String roleName, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<UserResponseDTO> findAvailableContractorsByRoleDateRange(String roleName, LocalDateTime startDate, LocalDateTime endDate) {
 
         RoleEntity role = findRoleByName(roleName);
         DateValidator.validateDateRange(startDate, endDate);
@@ -66,7 +66,7 @@ public class UserService implements IUserService {
         Date endTimeSQL = Date.valueOf(endDate.toLocalDate());
 
         return this.userEntityToUserResponseDTOMapper
-                .map(this.userRepository.findAvailableContractorsByDateRange(role.getRoleId(), startTimeSQL, endTimeSQL));
+                .map(this.userRepository.findAvailableContractorsByRoleDateRange(role.getRoleId(), startTimeSQL, endTimeSQL));
 
     }
 

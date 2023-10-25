@@ -47,12 +47,12 @@ public class AdministratorController {
     }
 
     @GetMapping("/available-contractors")
-    public ResponseEntity<List<UserResponseDTO>> findAvailableContractorsByDateRange(
+    public ResponseEntity<List<UserResponseDTO>> findAvailableContractorsByRoleDateRange(
             @RequestParam String roleName,
             @RequestParam LocalDateTime startDate,
             @RequestParam LocalDateTime endDate
     ) {
-        List<UserResponseDTO> response = this.userService.findAvailableContractorsByDateRange(roleName, startDate, endDate);
+        List<UserResponseDTO> response = this.userService.findAvailableContractorsByRoleDateRange(roleName, startDate, endDate);
         return new ResponseEntity<List<UserResponseDTO>>(response, HttpStatus.OK);
     }
 
