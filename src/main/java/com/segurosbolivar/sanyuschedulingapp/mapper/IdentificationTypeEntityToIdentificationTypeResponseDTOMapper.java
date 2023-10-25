@@ -1,6 +1,6 @@
 package com.segurosbolivar.sanyuschedulingapp.mapper;
 
-import com.segurosbolivar.sanyuschedulingapp.dto.IdentificationTypeResponseDTO;
+import com.segurosbolivar.sanyuschedulingapp.dto.response.IdentificationTypeResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.entity.IdentificationTypeEntity;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ public class IdentificationTypeEntityToIdentificationTypeResponseDTOMapper imple
 
         List<IdentificationTypeResponseDTO> response = new ArrayList<>();
 
-        for (IdentificationTypeEntity identificationType: identificationTypeList) {
+        identificationTypeList.forEach(identificationType -> {
             response.add(
                     IdentificationTypeResponseDTO.builder()
                             .identificationTypeId(identificationType.getIdentificationTypeId())
@@ -34,7 +34,7 @@ public class IdentificationTypeEntityToIdentificationTypeResponseDTOMapper imple
                             .description(identificationType.getDescription())
                             .build()
             );
-        }
+        });
 
         return response;
 

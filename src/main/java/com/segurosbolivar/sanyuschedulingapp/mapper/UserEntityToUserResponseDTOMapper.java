@@ -1,6 +1,6 @@
 package com.segurosbolivar.sanyuschedulingapp.mapper;
 
-import com.segurosbolivar.sanyuschedulingapp.dto.UserResponseDTO;
+import com.segurosbolivar.sanyuschedulingapp.dto.response.UserResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
@@ -39,9 +39,9 @@ public class UserEntityToUserResponseDTOMapper implements IMapper<UserEntity, Us
     @Override
     public List<UserResponseDTO> map(List<UserEntity> userList) {
 
-        ArrayList<UserResponseDTO> response = new ArrayList<>();
+        List<UserResponseDTO> response = new ArrayList<>();
 
-        for (UserEntity user: userList) {
+        userList.forEach(user -> {
             response.add(
                     UserResponseDTO.builder()
                             .userId(user.getUserId())
@@ -55,7 +55,7 @@ public class UserEntityToUserResponseDTOMapper implements IMapper<UserEntity, Us
                             .role(this.roleEntityToRoleResponseDTOMapper.map(user.getRole()))
                             .build()
             );
-        }
+        });
 
         return response;
 

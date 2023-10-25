@@ -1,6 +1,6 @@
 package com.segurosbolivar.sanyuschedulingapp.service;
 
-import com.segurosbolivar.sanyuschedulingapp.dto.IdentificationTypeResponseDTO;
+import com.segurosbolivar.sanyuschedulingapp.dto.response.IdentificationTypeResponseDTO;
 
 import java.util.List;
 

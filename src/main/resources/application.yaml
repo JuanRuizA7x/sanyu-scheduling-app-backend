@@ -28,6 +28,9 @@ jwt:
 frontend:
   url: http://localhost:4200
 
+holiday-api:
+  url: https://date.nager.at
+
 logging:
   level:
     org.springframework.security: DEBUG

@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 public class WorkShiftEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "WORK_SHIFT_ID")
     private Long workShiftId;
     @NotNull
@@ -28,7 +29,7 @@ public class WorkShiftEntity {
     @JoinColumn(name = "SCHEDULE_ID")
     private ScheduleEntity schedule;
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private UserEntity user;
     @NotNull

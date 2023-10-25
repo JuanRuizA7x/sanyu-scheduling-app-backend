@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum RoleEnum {
 
     ADMINISTRATOR("Administrador"),
-    CONTRACTOR("Contratista");
+    SUPERVISOR_CONTRACTOR("Contratista Supervisor"),
+    FIELD_CONTRACTOR("Contratista de Campo");
 
     private final String description;
 

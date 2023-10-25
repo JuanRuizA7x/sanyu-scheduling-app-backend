@@ -1,5 +1,6 @@
-package com.segurosbolivar.sanyuschedulingapp.dto;
+package com.segurosbolivar.sanyuschedulingapp.dto.response;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,10 +14,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class WorkShiftResponseDTO {
 
+    @NotNull
     private Long workShiftId;
+    @NotNull
     private LocalDateTime date;
+    @NotNull
     private ScheduleResponseDTO schedule;
+    @NotNull
     private UserResponseDTO user;
+    @NotNull
     private Boolean isStarted;
     private LocalDateTime startedAt;
 

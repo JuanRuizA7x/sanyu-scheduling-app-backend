@@ -1,6 +1,6 @@
 package com.segurosbolivar.sanyuschedulingapp.mapper;
 
-import com.segurosbolivar.sanyuschedulingapp.dto.RoleResponseDTO;
+import com.segurosbolivar.sanyuschedulingapp.dto.response.RoleResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.entity.RoleEntity;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +22,9 @@ public class RoleEntityToRoleResponseDTOMapper implements IMapper<RoleEntity, Ro
     @Override
     public List<RoleResponseDTO> map(List<RoleEntity> roleList) {
 
-        ArrayList<RoleResponseDTO> response = new ArrayList<>();
+        List<RoleResponseDTO> response = new ArrayList<>();
 
-        for (RoleEntity role: roleList) {
+        roleList.forEach(role -> {
             response.add(
                     RoleResponseDTO.builder()
                             .roleId(role.getRoleId())
@@ -32,7 +32,7 @@ public class RoleEntityToRoleResponseDTOMapper implements IMapper<RoleEntity, Ro
                             .description(role.getDescription())
                             .build()
             );
-        }
+        });
 
         return response;
 
