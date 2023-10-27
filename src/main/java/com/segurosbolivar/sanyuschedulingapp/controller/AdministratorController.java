@@ -3,10 +3,8 @@ package com.segurosbolivar.sanyuschedulingapp.controller;
 import com.segurosbolivar.sanyuschedulingapp.dto.request.MultipleWorkShiftsRequestDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.ScheduleResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.UserResponseDTO;
-import com.segurosbolivar.sanyuschedulingapp.service.IScheduleExtensionService;
-import com.segurosbolivar.sanyuschedulingapp.service.IScheduleService;
-import com.segurosbolivar.sanyuschedulingapp.service.IUserService;
-import com.segurosbolivar.sanyuschedulingapp.service.IWorkShiftService;
+import com.segurosbolivar.sanyuschedulingapp.dto.response.WorkShiftReportResponseDTO;
+import com.segurosbolivar.sanyuschedulingapp.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,17 +25,20 @@ public class AdministratorController {
     private final IScheduleExtensionService scheduleExtensionService;
     private final IUserService userService;
     private final IWorkShiftService workShiftService;
+    private final IWorkShiftReportService workShiftReportService;
 
     public AdministratorController(
             IScheduleService scheduleService,
             IScheduleExtensionService scheduleExtensionService,
             IUserService userService,
-            IWorkShiftService workShiftService
+            IWorkShiftService workShiftService,
+            IWorkShiftReportService workShiftReportService
     ) {
         this.scheduleService = scheduleService;
         this.scheduleExtensionService = scheduleExtensionService;
         this.userService = userService;
         this.workShiftService = workShiftService;
+        this.workShiftReportService = workShiftReportService;
     }
 
     @GetMapping("/schedules")
@@ -62,6 +63,12 @@ public class AdministratorController {
         Map<String, Integer> response = new HashMap<>();
         response.put("affectedRows", affectedRows);
         return new ResponseEntity<Map<String, Integer>>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/generate-report")
+    public ResponseEntity<WorkShiftReportResponseDTO> getAssignedWorkShiftsByDate(@RequestParam LocalDateTime date) {
+        WorkShiftReportResponseDTO response = this.workShiftReportService.getAssignedWorkShiftsByDate(date);
+        return new ResponseEntity<WorkShiftReportResponseDTO>(response, HttpStatus.OK);
     }
 
 }
