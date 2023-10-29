@@ -3,7 +3,6 @@ package com.segurosbolivar.sanyuschedulingapp.controller;
 import com.segurosbolivar.sanyuschedulingapp.dto.request.MultipleWorkShiftsRequestDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.ScheduleResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.UserResponseDTO;
-import com.segurosbolivar.sanyuschedulingapp.dto.response.WorkShiftReportResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,9 +65,9 @@ public class AdministratorController {
     }
 
     @GetMapping("/generate-report")
-    public ResponseEntity<WorkShiftReportResponseDTO> getAssignedWorkShiftsByDate(@RequestParam LocalDateTime date) {
-        WorkShiftReportResponseDTO response = this.workShiftReportService.getAssignedWorkShiftsByDate(date);
-        return new ResponseEntity<WorkShiftReportResponseDTO>(response, HttpStatus.OK);
+    public ResponseEntity<Void> getAssignedWorkShiftsByDate(@RequestParam String email, @RequestParam LocalDateTime date) {
+        this.workShiftReportService.generateManualReport(email, date);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 }

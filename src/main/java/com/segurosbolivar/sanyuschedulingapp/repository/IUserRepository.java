@@ -58,4 +58,14 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
             @Param("endDate") Date endDate
     );
 
+    @Query(
+            value = """
+                    SELECT EMAIL FROM "USER"
+                    WHERE ROLE_ID = :roleId
+                    AND IS_ACTIVE = :isActive
+                    """,
+            nativeQuery = true
+    )
+    List<String> findEmailByRoleAndIsActive(@Param("roleId") Long roleId, @Param("isActive") Boolean isActive);
+
 }

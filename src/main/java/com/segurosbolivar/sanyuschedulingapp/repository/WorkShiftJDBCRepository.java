@@ -91,9 +91,9 @@ public class WorkShiftJDBCRepository {
             Object[] attributes = struct.getAttributes();
 
             AssignedWorkShiftResponseDTO dto = AssignedWorkShiftResponseDTO.builder()
-                    .fullName((String) attributes[0])
-                    .identificationType((String) attributes[1])
-                    .identificationNumber((String) attributes[2])
+                    .identificationType((String) attributes[0])
+                    .identificationNumber((String) attributes[1])
+                    .fullName((String) attributes[2])
                     .email((String) attributes[3])
                     .role((String) attributes[4])
                     .schedule((String) attributes[5])

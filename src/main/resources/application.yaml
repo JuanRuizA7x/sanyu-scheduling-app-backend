@@ -31,6 +31,11 @@ frontend:
 holiday-api:
   url: https://date.nager.at
 
+mailjet:
+  api-key: d970b8fb7805640ba9f8d97b8b0c38fe
+  secret-key: 9e8da508475558bde9a1cce48c411fec
+  from-email: ruiz100509@gmail.com
+
 logging:
   level:
     org.springframework.security: DEBUG
