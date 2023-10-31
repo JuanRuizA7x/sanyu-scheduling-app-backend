@@ -21,7 +21,7 @@ public class DateValidator {
 
         if(startDateValidation < 1) {
             throw new WorkShiftException(
-                    WorkShiftExceptionMessage.getInvalidDate(),
+                    WorkShiftExceptionMessage.getInvalidStartDate(),
                     HttpStatus.BAD_REQUEST
             );
         }

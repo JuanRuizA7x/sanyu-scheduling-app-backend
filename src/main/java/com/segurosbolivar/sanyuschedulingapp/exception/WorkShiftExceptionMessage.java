@@ -3,7 +3,7 @@ package com.segurosbolivar.sanyuschedulingapp.exception;
 public class WorkShiftExceptionMessage {
 
     public static String WORK_SHIFT_NOT_FOUND = "Work shift not found.";
-    public static String INVALID_DATE = "The entered date cannot be earlier than or equal to the current date.";
+    public static String INVALID_START_DATE = "The entered date cannot be earlier than or equal to the current date.";
     public static String INVALID_END_DATE = "The end date cannot be earlier than the start date.";
     public static String INVALID_ROLE_ASSIGNMENT = "Only users with any contractor role can be assigned work shifts.";
     public static String INVALID_SCHEDULE_ASSIGNMENT = "The ${scheduleName} schedule cannot be assigned to a user with the ${roleName} role.";
@@ -20,8 +20,8 @@ public class WorkShiftExceptionMessage {
         return WORK_SHIFT_NOT_FOUND;
     }
 
-    public static String getInvalidDate() {
-        return INVALID_DATE;
+    public static String getInvalidStartDate() {
+        return INVALID_START_DATE;
     }
 
     public static String getInvalidEndDate() {

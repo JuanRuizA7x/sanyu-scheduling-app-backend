@@ -1,6 +1,7 @@
 package com.segurosbolivar.sanyuschedulingapp.repository;
 
 import com.segurosbolivar.sanyuschedulingapp.entity.UserEntity;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @Repository
 public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 
+    @NotNull
     @Query(
             value = """
                     SELECT * FROM "USER"
@@ -26,7 +28,7 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
             nativeQuery = true
     )
     @Override
-    Optional<UserEntity> findById(@Param("userId") Long userId);
+    Optional<UserEntity> findById(@NotNull @Param("userId") Long userId);
 
     @Query(
             value = """
@@ -67,5 +69,24 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
             nativeQuery = true
     )
     List<String> findEmailByRoleAndIsActive(@Param("roleId") Long roleId, @Param("isActive") Boolean isActive);
+
+    @Query(
+            value = """
+                    SELECT U.* FROM "USER" U
+                    JOIN IDENTIFICATION_TYPE I
+                    ON (U.IDENTIFICATION_TYPE_ID = I.IDENTIFICATION_TYPE_ID)
+                    WHERE I.CODE = :identificationType
+                    AND U.IDENTIFICATION_NUMBER = :identificationNumber
+                    AND U.IS_ACTIVE = :isActive
+                    ORDER BY USER_ID ASC
+                    FETCH FIRST 1 ROW ONLY
+                    """,
+            nativeQuery = true
+    )
+    Optional<UserEntity> findByIdentificationTypeAndIdentificationNumberAndIsActive(
+            @Param("identificationType") String identificationType,
+            @Param("identificationNumber") String identificationNumber,
+            @Param("isActive") Boolean isActive
+    );
 
 }

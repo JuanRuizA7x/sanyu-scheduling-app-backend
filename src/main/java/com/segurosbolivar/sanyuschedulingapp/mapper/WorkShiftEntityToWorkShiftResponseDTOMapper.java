@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class WorkShiftEntityToWorkShiftResponseDTO implements IMapper<WorkShiftEntity, WorkShiftResponseDTO> {
+public class WorkShiftEntityToWorkShiftResponseDTOMapper implements IMapper<WorkShiftEntity, WorkShiftResponseDTO> {
 
     private final ScheduleEntityToScheduleResponseDTOMapper scheduleEntityToScheduleResponseDTOMapper;
     private final UserEntityToUserResponseDTOMapper userEntityToUserResponseDTOMapper;
 
-    public WorkShiftEntityToWorkShiftResponseDTO(
+    public WorkShiftEntityToWorkShiftResponseDTOMapper(
             ScheduleEntityToScheduleResponseDTOMapper scheduleEntityToScheduleResponseDTOMapper,
             UserEntityToUserResponseDTOMapper userEntityToUserResponseDTOMapper
     ) {
@@ -38,7 +38,7 @@ public class WorkShiftEntityToWorkShiftResponseDTO implements IMapper<WorkShiftE
 
         List<WorkShiftResponseDTO> response = new ArrayList<>();
 
-        for (WorkShiftEntity workShift: workShiftList) {
+        workShiftList.forEach(workShift -> {
             response.add(
                     WorkShiftResponseDTO.builder()
                             .workShiftId(workShift.getWorkShiftId())
@@ -49,7 +49,7 @@ public class WorkShiftEntityToWorkShiftResponseDTO implements IMapper<WorkShiftE
                             .startedAt(workShift.getStartedAt())
                             .build()
             );
-        }
+        });
 
         return response;
 

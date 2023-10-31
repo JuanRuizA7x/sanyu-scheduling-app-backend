@@ -1,25 +1,31 @@
 package com.segurosbolivar.sanyuschedulingapp.controller;
 
 import com.segurosbolivar.sanyuschedulingapp.dto.request.MultipleWorkShiftsRequestDTO;
+import com.segurosbolivar.sanyuschedulingapp.dto.response.CsvFileWorkShiftResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.ScheduleResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.UserResponseDTO;
+import com.segurosbolivar.sanyuschedulingapp.exception.CsvFileWorkShiftException;
+import com.segurosbolivar.sanyuschedulingapp.exception.CsvFileWorkShiftExceptionMessage;
 import com.segurosbolivar.sanyuschedulingapp.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @PreAuthorize("hasRole('Administrador')")
 @RequestMapping("/api/administrator")
 public class AdministratorController {
 
+    private final ICsvFileWorkShiftService csvFileWorkShiftService;
     private final IScheduleService scheduleService;
     private final IScheduleExtensionService scheduleExtensionService;
     private final IUserService userService;
@@ -27,12 +33,13 @@ public class AdministratorController {
     private final IWorkShiftReportService workShiftReportService;
 
     public AdministratorController(
-            IScheduleService scheduleService,
+            ICsvFileWorkShiftService csvFileWorkShiftService, IScheduleService scheduleService,
             IScheduleExtensionService scheduleExtensionService,
             IUserService userService,
             IWorkShiftService workShiftService,
             IWorkShiftReportService workShiftReportService
     ) {
+        this.csvFileWorkShiftService = csvFileWorkShiftService;
         this.scheduleService = scheduleService;
         this.scheduleExtensionService = scheduleExtensionService;
         this.userService = userService;
@@ -68,6 +75,22 @@ public class AdministratorController {
     public ResponseEntity<Void> getAssignedWorkShiftsByDate(@RequestParam String email, @RequestParam LocalDateTime date) {
         this.workShiftReportService.generateManualReport(email, date);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PostMapping("/upload-csv-file")
+    public ResponseEntity<CsvFileWorkShiftResponseDTO> processCsvFile(@RequestParam("csvFile") MultipartFile csvFile) {
+        validateFileExtension(csvFile);
+        CsvFileWorkShiftResponseDTO csvFileWorkShiftResponseDTO = this.csvFileWorkShiftService.processCsvFile(csvFile);
+        return new ResponseEntity<CsvFileWorkShiftResponseDTO>(csvFileWorkShiftResponseDTO, HttpStatus.OK);
+    }
+
+    private void validateFileExtension(MultipartFile csvFile) {
+        if (!Objects.equals(csvFile.getContentType(), "text/csv")) {
+            throw new CsvFileWorkShiftException(
+                    CsvFileWorkShiftExceptionMessage.getInvalidFileExtension(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 
 }

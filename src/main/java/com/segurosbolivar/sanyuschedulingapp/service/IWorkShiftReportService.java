@@ -9,6 +9,5 @@ public interface IWorkShiftReportService {
 
     void generateAutomaticReport();
     void generateManualReport(String toEmail, LocalDateTime date);
-    WorkShiftReportResponseDTO getAssignedWorkShiftsByDate(LocalDateTime date);
 
 }

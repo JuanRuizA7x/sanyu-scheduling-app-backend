@@ -9,7 +9,7 @@ import com.segurosbolivar.sanyuschedulingapp.enumeration.ScheduleEnum;
 import com.segurosbolivar.sanyuschedulingapp.exception.WorkShiftException;
 import com.segurosbolivar.sanyuschedulingapp.exception.WorkShiftExceptionMessage;
 import com.segurosbolivar.sanyuschedulingapp.mapper.SingleWorkShiftRequestDTOToWorkShiftEntityMapper;
-import com.segurosbolivar.sanyuschedulingapp.mapper.WorkShiftEntityToWorkShiftResponseDTO;
+import com.segurosbolivar.sanyuschedulingapp.mapper.WorkShiftEntityToWorkShiftResponseDTOMapper;
 import com.segurosbolivar.sanyuschedulingapp.repository.IWorkShiftRepository;
 import com.segurosbolivar.sanyuschedulingapp.repository.WorkShiftJDBCRepository;
 import com.segurosbolivar.sanyuschedulingapp.service.client.HolidayService;
@@ -34,7 +34,7 @@ public class WorkShiftService implements IWorkShiftService {
     private final IUserService userService;
     private final HolidayService holidayService;
     private final SingleWorkShiftRequestDTOToWorkShiftEntityMapper singleWorkShiftRequestDTOToWorkShiftEntityMapper;
-    private final WorkShiftEntityToWorkShiftResponseDTO workShiftEntityToWorkShiftResponseDTO;
+    private final WorkShiftEntityToWorkShiftResponseDTOMapper workShiftEntityToWorkShiftResponseDTOMapper;
     private final WorkShiftJDBCRepository workShiftJDBCRepository;
 
     public WorkShiftService(
@@ -43,7 +43,7 @@ public class WorkShiftService implements IWorkShiftService {
             IUserService userService,
             HolidayService holidayService,
             SingleWorkShiftRequestDTOToWorkShiftEntityMapper singleWorkShiftRequestDTOToWorkShiftEntityMapper,
-            WorkShiftEntityToWorkShiftResponseDTO workShiftEntityToWorkShiftResponseDTO,
+            WorkShiftEntityToWorkShiftResponseDTOMapper workShiftEntityToWorkShiftResponseDTOMapper,
             WorkShiftJDBCRepository workShiftJDBCRepository
     ) {
         this.workShiftRepository = workShiftRepository;
@@ -51,7 +51,7 @@ public class WorkShiftService implements IWorkShiftService {
         this.userService = userService;
         this.holidayService = holidayService;
         this.singleWorkShiftRequestDTOToWorkShiftEntityMapper = singleWorkShiftRequestDTOToWorkShiftEntityMapper;
-        this.workShiftEntityToWorkShiftResponseDTO = workShiftEntityToWorkShiftResponseDTO;
+        this.workShiftEntityToWorkShiftResponseDTOMapper = workShiftEntityToWorkShiftResponseDTOMapper;
         this.workShiftJDBCRepository = workShiftJDBCRepository;
     }
 
@@ -104,8 +104,7 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
-    @Override
-    public int assignSingleWorkShift(SingleWorkShiftRequestDTO workShift, List<String> holidays) {
+    private int assignSingleWorkShift(SingleWorkShiftRequestDTO workShift, List<String> holidays) {
 
         String workShiftDate = workShift.getDate().toLocalDate().toString();
 
@@ -116,7 +115,7 @@ public class WorkShiftService implements IWorkShiftService {
         ) {
             WorkShiftEntity workShiftEntity = this.singleWorkShiftRequestDTOToWorkShiftEntityMapper
                     .map(workShift);
-            workShiftEntity.setIsStarted(true);
+            workShiftEntity.setIsStarted(false);
             return this.workShiftJDBCRepository.save(workShiftEntity);
         }
 
@@ -124,7 +123,7 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
-    public List<String> getHolidays(int startYear, int endYear, String countryCode) {
+    private List<String> getHolidays(int startYear, int endYear, String countryCode) {
 
         List<HolidayResponseDTO> holidays = new ArrayList<>();
         List<String> response = new ArrayList<>();
@@ -139,7 +138,7 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
-    public void validateDateRangeAvailability(Long userId, Date startDate, Date endDate) {
+    private void validateDateRangeAvailability(Long userId, Date startDate, Date endDate) {
 
         Integer assignedWorkShiftsCount = this.workShiftJDBCRepository.countByUserIdAndDateRange(userId, startDate, endDate);
 
@@ -152,7 +151,7 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
-    public void validateRoleAndScheduleCompatibility(String roleName, String scheduleName) {
+    private void validateRoleAndScheduleCompatibility(String roleName, String scheduleName) {
 
         if(
                 !Objects.equals(roleName, RoleEnum.SUPERVISOR_CONTRACTOR.getDescription()) &&

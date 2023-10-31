@@ -2,8 +2,11 @@ package com.segurosbolivar.sanyuschedulingapp.repository;
 
 import com.segurosbolivar.sanyuschedulingapp.dto.response.AssignedWorkShiftResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.WorkShiftReportResponseDTO;
+import com.segurosbolivar.sanyuschedulingapp.entity.ScheduleEntity;
+import com.segurosbolivar.sanyuschedulingapp.entity.UserEntity;
 import com.segurosbolivar.sanyuschedulingapp.entity.WorkShiftEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Repository
@@ -36,8 +40,63 @@ public class WorkShiftJDBCRepository {
                 workShift.getDate(),
                 workShift.getSchedule().getScheduleId(),
                 workShift.getUser().getUserId(),
-                false
+                workShift.getIsStarted()
         );
+
+    }
+
+    public int update(WorkShiftEntity workShift) {
+
+        String sqlCommand = """
+                    UPDATE WORK_SHIFT
+                    SET
+                        "DATE" = ?,
+                        SCHEDULE_ID = ?,
+                        USER_ID = ?,
+                        IS_STARTED = ?,
+                        LAST_MODIFICATION_DATE = CURRENT_TIMESTAMP
+                    WHERE WORK_SHIFT_ID = ?
+                """;
+
+        return this.jdbcTemplate.update(
+                sqlCommand,
+                workShift.getDate(),
+                workShift.getSchedule().getScheduleId(),
+                workShift.getUser().getUserId(),
+                workShift.getIsStarted(),
+                workShift.getWorkShiftId()
+        );
+
+    }
+
+    public WorkShiftEntity findByUserIdAndDate(Long userId, Date date) {
+
+        String sqlCommand = """
+                    SELECT * FROM WORK_SHIFT
+                    WHERE USER_ID = ?
+                    AND "DATE" = ?
+                    FETCH FIRST 1 ROW ONLY
+                """;
+
+        RowMapper<WorkShiftEntity> rowMapper = (rs, rowNum) -> {
+            return WorkShiftEntity.builder()
+                    .workShiftId(rs.getLong(1)) // Change index from 0 to 1
+                    .date(rs.getObject(2, LocalDateTime.class))
+                    .schedule(ScheduleEntity.builder().scheduleId(rs.getLong(3)).build())
+                    .user(UserEntity.builder().userId(rs.getLong(4)).build())
+                    .isStarted(rs.getBoolean(5))
+                    .creationDate(rs.getObject(6, LocalDateTime.class))
+                    .lastModificationDate(rs.getObject(7, LocalDateTime.class))
+                    .build();
+        };
+
+        List<WorkShiftEntity> workShifts = jdbcTemplate.query(
+                sqlCommand,
+                rowMapper,
+                new Object[]{userId, date}
+        );
+
+        return workShifts.isEmpty() ? null : workShifts.get(0);
 
     }
 
