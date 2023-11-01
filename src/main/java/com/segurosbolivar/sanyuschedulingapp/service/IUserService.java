@@ -10,5 +10,6 @@ public interface IUserService {
     UserResponseDTO findByUserId(Long userId);
     UserResponseDTO findByEmail(String email);
     List<UserResponseDTO> findAvailableContractorsByRoleDateRange(String roleName, LocalDateTime startDate, LocalDateTime endDate);
+    List<UserResponseDTO> findByIdentificationNumberLikeAndIsActive(String identificationNumber);
 
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -35,6 +36,8 @@ public class WorkShiftEntity {
     @NotNull
     @Column(name = "IS_STARTED")
     private Boolean isStarted;
+    @OneToMany(mappedBy = "workShift", cascade = CascadeType.ALL)
+    private List<ScheduleExtensionEntity> scheduleExtensions;
     @Column(name = "STARTED_AT")
     private LocalDateTime startedAt;
     @NotNull

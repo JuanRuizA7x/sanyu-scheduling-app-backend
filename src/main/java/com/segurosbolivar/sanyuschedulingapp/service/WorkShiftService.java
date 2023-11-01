@@ -104,6 +104,18 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
+    @Override
+    public List<WorkShiftResponseDTO> findByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+
+        Date formattedStartDate = Date.valueOf(startDate.toLocalDate());
+        Date formattedEndDate = Date.valueOf(endDate.toLocalDate());
+
+        return this.workShiftEntityToWorkShiftResponseDTOMapper.map(
+                this.workShiftRepository.findByUserIdAndDateRange(userId, formattedStartDate, formattedEndDate)
+        );
+
+    }
+
     private int assignSingleWorkShift(SingleWorkShiftRequestDTO workShift, List<String> holidays) {
 
         String workShiftDate = workShift.getDate().toLocalDate().toString();

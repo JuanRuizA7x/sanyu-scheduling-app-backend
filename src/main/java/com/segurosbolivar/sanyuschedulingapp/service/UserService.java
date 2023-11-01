@@ -8,6 +8,7 @@ import com.segurosbolivar.sanyuschedulingapp.mapper.UserEntityToUserResponseDTOM
 import com.segurosbolivar.sanyuschedulingapp.repository.IRoleRepository;
 import com.segurosbolivar.sanyuschedulingapp.repository.IUserRepository;
 import com.segurosbolivar.sanyuschedulingapp.util.DateValidator;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -70,7 +71,14 @@ public class UserService implements IUserService {
 
     }
 
-    public RoleEntity findRoleByName(String roleName) {
+    @Override
+    public List<UserResponseDTO> findByIdentificationNumberLikeAndIsActive(String identificationNumber) {
+        return this.userEntityToUserResponseDTOMapper.map(
+                this.userRepository.findByIdentificationNumberLikeAndIsActive(identificationNumber.trim(), true)
+        );
+    }
+
+    private RoleEntity findRoleByName(String roleName) {
         return this.roleRepository.findByName(roleName)
                 .orElseThrow(() -> new RoleException(
                         RoleExceptionMessage.getRoleNotFound(),

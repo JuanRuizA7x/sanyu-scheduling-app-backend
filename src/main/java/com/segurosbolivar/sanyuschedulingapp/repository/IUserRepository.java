@@ -89,4 +89,17 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
             @Param("isActive") Boolean isActive
     );
 
+    @Query(
+            value = """
+                    SELECT * FROM "USER"
+                    WHERE IDENTIFICATION_NUMBER LIKE (:identificationNumber || '%')
+                    AND IS_ACTIVE = :isActive
+                    """,
+            nativeQuery = true
+    )
+    List<UserEntity> findByIdentificationNumberLikeAndIsActive(
+            @Param("identificationNumber") String identificationNumber,
+            @Param("isActive") Boolean isActive
+    );
+
 }

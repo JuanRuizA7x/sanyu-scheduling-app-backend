@@ -4,6 +4,7 @@ import com.segurosbolivar.sanyuschedulingapp.dto.request.MultipleWorkShiftsReque
 import com.segurosbolivar.sanyuschedulingapp.dto.response.CsvFileWorkShiftResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.ScheduleResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.UserResponseDTO;
+import com.segurosbolivar.sanyuschedulingapp.dto.response.WorkShiftResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.exception.CsvFileWorkShiftException;
 import com.segurosbolivar.sanyuschedulingapp.exception.CsvFileWorkShiftExceptionMessage;
 import com.segurosbolivar.sanyuschedulingapp.service.*;
@@ -78,7 +79,7 @@ public class AdministratorController {
     }
 
     @PostMapping("/upload-csv-file")
-    public ResponseEntity<CsvFileWorkShiftResponseDTO> processCsvFile(@RequestParam("csvFile") MultipartFile csvFile) {
+    public ResponseEntity<CsvFileWorkShiftResponseDTO> processCsvFile(@RequestBody MultipartFile csvFile) {
         validateFileExtension(csvFile);
         CsvFileWorkShiftResponseDTO csvFileWorkShiftResponseDTO = this.csvFileWorkShiftService.processCsvFile(csvFile);
         return new ResponseEntity<CsvFileWorkShiftResponseDTO>(csvFileWorkShiftResponseDTO, HttpStatus.OK);
@@ -91,6 +92,24 @@ public class AdministratorController {
                     HttpStatus.BAD_REQUEST
             );
         }
+    }
+
+    @GetMapping("/contractors/identification-number-like")
+    public ResponseEntity<List<UserResponseDTO>> findByIdentificationNumberLikeAndIsActive(@RequestParam String identificationNumber) {
+        List<UserResponseDTO> response = this.userService.findByIdentificationNumberLikeAndIsActive(identificationNumber);
+        return new ResponseEntity<List<UserResponseDTO>>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/work-shifts/user-id-and-date-range")
+    public ResponseEntity<List<WorkShiftResponseDTO>> findByUserIdAndDateRange(
+            @RequestParam Long userId,
+            @RequestParam LocalDateTime startDate,
+            @RequestParam LocalDateTime endDate
+    ) {
+        List<WorkShiftResponseDTO> response = this.workShiftService.findByUserIdAndDateRange(
+                userId, startDate, endDate
+        );
+        return new ResponseEntity<List<WorkShiftResponseDTO>>(response, HttpStatus.OK);
     }
 
 }

@@ -11,5 +11,6 @@ public interface IWorkShiftService {
     List<WorkShiftResponseDTO> findAllByUserIdAndStartDate(Long userId, LocalDateTime startDate);
     WorkShiftResponseDTO findByWorkShiftId(Long workShiftId);
     int assignMultipleWorkShifts(MultipleWorkShiftsRequestDTO multipleWorkShiftsRequestDTO);
+    List<WorkShiftResponseDTO> findByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate);
 
 }
