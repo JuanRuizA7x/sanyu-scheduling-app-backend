@@ -1,17 +1,16 @@
 package com.segurosbolivar.sanyuschedulingapp.dto.response;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class WorkShiftResponseDTO {
 
     @NotNull
@@ -21,7 +20,8 @@ public class WorkShiftResponseDTO {
     @NotNull
     private ScheduleResponseDTO schedule;
     @NotNull
-    private UserResponseDTO user;
+    private Long userId;
+    private List<ScheduleExtensionResponseDTO> scheduleExtensions;
     @NotNull
     private Boolean isStarted;
     private LocalDateTime startedAt;

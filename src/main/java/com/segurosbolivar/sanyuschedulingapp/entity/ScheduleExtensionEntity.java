@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "SCHEDULE_EXTENSION")
 public class ScheduleExtensionEntity {
@@ -34,7 +32,7 @@ public class ScheduleExtensionEntity {
     @Size(max = 500)
     private String reason;
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "WORK_SHIFT_ID")
     private WorkShiftEntity workShift;
     @NotNull

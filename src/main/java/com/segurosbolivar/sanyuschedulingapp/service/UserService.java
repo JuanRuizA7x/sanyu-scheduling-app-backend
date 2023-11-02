@@ -8,7 +8,6 @@ import com.segurosbolivar.sanyuschedulingapp.mapper.UserEntityToUserResponseDTOM
 import com.segurosbolivar.sanyuschedulingapp.repository.IRoleRepository;
 import com.segurosbolivar.sanyuschedulingapp.repository.IUserRepository;
 import com.segurosbolivar.sanyuschedulingapp.util.DateValidator;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

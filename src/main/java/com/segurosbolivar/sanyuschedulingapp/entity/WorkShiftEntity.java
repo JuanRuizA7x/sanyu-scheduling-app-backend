@@ -2,10 +2,7 @@ package com.segurosbolivar.sanyuschedulingapp.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,6 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "WORK_SHIFT")
 public class WorkShiftEntity {
@@ -30,14 +28,13 @@ public class WorkShiftEntity {
     @JoinColumn(name = "SCHEDULE_ID")
     private ScheduleEntity schedule;
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private UserEntity user;
+    @Column(name = "USER_ID")
+    private Long userId;
+    @OneToMany(mappedBy = "workShift", cascade = CascadeType.ALL)
+    private List<ScheduleExtensionEntity> scheduleExtensions;
     @NotNull
     @Column(name = "IS_STARTED")
     private Boolean isStarted;
-    @OneToMany(mappedBy = "workShift", cascade = CascadeType.ALL)
-    private List<ScheduleExtensionEntity> scheduleExtensions;
     @Column(name = "STARTED_AT")
     private LocalDateTime startedAt;
     @NotNull

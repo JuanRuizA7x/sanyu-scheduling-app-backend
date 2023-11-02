@@ -8,6 +8,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class WorkShiftReportResponseDTO {
 
     private List<AssignedWorkShiftResponseDTO> assignedWorkShiftResponseDTOList;

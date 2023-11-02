@@ -1,6 +1,7 @@
 package com.segurosbolivar.sanyuschedulingapp.controller;
 
 import com.segurosbolivar.sanyuschedulingapp.dto.request.MultipleWorkShiftsRequestDTO;
+import com.segurosbolivar.sanyuschedulingapp.dto.request.ScheduleExtensionRequestDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.CsvFileWorkShiftResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.ScheduleResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.UserResponseDTO;
@@ -110,6 +111,12 @@ public class AdministratorController {
                 userId, startDate, endDate
         );
         return new ResponseEntity<List<WorkShiftResponseDTO>>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/extend-schedule")
+    public ResponseEntity<Void> extendSchedule(@RequestBody ScheduleExtensionRequestDTO scheduleExtensionRequestDTO) {
+        this.scheduleExtensionService.extendSchedule(scheduleExtensionRequestDTO);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 }

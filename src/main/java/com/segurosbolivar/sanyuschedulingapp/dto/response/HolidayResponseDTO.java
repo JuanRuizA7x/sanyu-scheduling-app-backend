@@ -7,10 +7,10 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class HolidayResponseDTO {
 
     @NotBlank
-    //'yyyy-mm-dd'
     private String date;
     private String localName;
     private String name;

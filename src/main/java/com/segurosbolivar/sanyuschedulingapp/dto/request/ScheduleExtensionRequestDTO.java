@@ -1,4 +1,4 @@
-package com.segurosbolivar.sanyuschedulingapp.dto.response;
+package com.segurosbolivar.sanyuschedulingapp.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,22 +10,17 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ScheduleResponseDTO {
+public class ScheduleExtensionRequestDTO {
 
-    @NotNull
-    private Long scheduleId;
-    @NotBlank
-    @Size(max = 50)
-    private String name;
     @NotBlank
     @Size(min = 5, max = 5)
     private String startTime;
     @NotBlank
     @Size(min = 5, max = 5)
     private String endTime;
-    @Size(min = 5, max = 5)
-    private String breakStartTime;
-    @Size(min = 5, max = 5)
-    private String breakEndTime;
+    @NotBlank
+    private String reason;
+    @NotNull
+    private Long workShiftId;
 
 }

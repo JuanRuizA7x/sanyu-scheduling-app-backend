@@ -11,14 +11,14 @@ import java.util.List;
 public class WorkShiftEntityToWorkShiftResponseDTOMapper implements IMapper<WorkShiftEntity, WorkShiftResponseDTO> {
 
     private final ScheduleEntityToScheduleResponseDTOMapper scheduleEntityToScheduleResponseDTOMapper;
-    private final UserEntityToUserResponseDTOMapper userEntityToUserResponseDTOMapper;
+    private final ScheduleExtensionEntityToScheduleExtensionResponseDTOMapper scheduleExtensionEntityToScheduleExtensionResponseDTOMapper;
 
     public WorkShiftEntityToWorkShiftResponseDTOMapper(
             ScheduleEntityToScheduleResponseDTOMapper scheduleEntityToScheduleResponseDTOMapper,
-            UserEntityToUserResponseDTOMapper userEntityToUserResponseDTOMapper
+            ScheduleExtensionEntityToScheduleExtensionResponseDTOMapper scheduleExtensionEntityToScheduleExtensionResponseDTOMapper
     ) {
         this.scheduleEntityToScheduleResponseDTOMapper = scheduleEntityToScheduleResponseDTOMapper;
-        this.userEntityToUserResponseDTOMapper = userEntityToUserResponseDTOMapper;
+        this.scheduleExtensionEntityToScheduleExtensionResponseDTOMapper = scheduleExtensionEntityToScheduleExtensionResponseDTOMapper;
     }
 
     @Override
@@ -27,7 +27,12 @@ public class WorkShiftEntityToWorkShiftResponseDTOMapper implements IMapper<Work
                 .workShiftId(workShift.getWorkShiftId())
                 .date(workShift.getDate())
                 .schedule(this.scheduleEntityToScheduleResponseDTOMapper.map(workShift.getSchedule()))
-                .user(this.userEntityToUserResponseDTOMapper.map(workShift.getUser()))
+                .userId(workShift.getUserId())
+                .scheduleExtensions(
+                        this.scheduleExtensionEntityToScheduleExtensionResponseDTOMapper.map(
+                                workShift.getScheduleExtensions()
+                        )
+                )
                 .isStarted(workShift.getIsStarted())
                 .startedAt(workShift.getStartedAt())
                 .build();
@@ -44,7 +49,12 @@ public class WorkShiftEntityToWorkShiftResponseDTOMapper implements IMapper<Work
                             .workShiftId(workShift.getWorkShiftId())
                             .date(workShift.getDate())
                             .schedule(this.scheduleEntityToScheduleResponseDTOMapper.map(workShift.getSchedule()))
-                            .user(this.userEntityToUserResponseDTOMapper.map(workShift.getUser()))
+                            .userId(workShift.getUserId())
+                            .scheduleExtensions(
+                                    this.scheduleExtensionEntityToScheduleExtensionResponseDTOMapper.map(
+                                            workShift.getScheduleExtensions()
+                                    )
+                            )
                             .isStarted(workShift.getIsStarted())
                             .startedAt(workShift.getStartedAt())
                             .build()

@@ -2,7 +2,6 @@ package com.segurosbolivar.sanyuschedulingapp.mapper;
 
 import com.segurosbolivar.sanyuschedulingapp.dto.request.SingleWorkShiftRequestDTO;
 import com.segurosbolivar.sanyuschedulingapp.entity.ScheduleEntity;
-import com.segurosbolivar.sanyuschedulingapp.entity.UserEntity;
 import com.segurosbolivar.sanyuschedulingapp.entity.WorkShiftEntity;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +16,7 @@ public class SingleWorkShiftRequestDTOToWorkShiftEntityMapper implements IMapper
         return WorkShiftEntity.builder()
                 .date(workShift.getDate())
                 .schedule(ScheduleEntity.builder().scheduleId(workShift.getScheduleId()).build())
-                .user(UserEntity.builder().userId(workShift.getUserId()).build())
+                .userId(workShift.getUserId())
                 .build();
     }
 
@@ -31,7 +30,7 @@ public class SingleWorkShiftRequestDTOToWorkShiftEntityMapper implements IMapper
                     WorkShiftEntity.builder()
                             .date(workShift.getDate())
                             .schedule(ScheduleEntity.builder().scheduleId(workShift.getScheduleId()).build())
-                            .user(UserEntity.builder().userId(workShift.getUserId()).build())
+                            .userId(workShift.getUserId())
                             .build()
             );
         });

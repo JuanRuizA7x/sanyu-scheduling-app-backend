@@ -2,14 +2,14 @@ package com.segurosbolivar.sanyuschedulingapp.exception;
 
 public class CsvFileWorkShiftExceptionMessage {
 
-    public static String INVALID_FILE_EXTENSION = "The file extension must be \".csv\".";
-    public static String USER_NOT_FOUND = "No existe un contratista con identificación ${identification}.";
-    public static String SCHEDULE_NOT_FOUND = "No existe un horario con nombre ${scheduleName}.";
-    public static String INVALID_DATE_FORMAT = "La fecha debe ser en el formato \"yyyy-mm-dd\".";
-    public static String INVALID_START_DATE = "La fecha de inicio no puede ser menor o igual a la fecha actual.";
-    public static String INVALID_END_DATE = "La fecha de finalización no puede ser menor a la fecha de inicio.";
-    public static String INVALID_ROLE_ASSIGNMENT = "Solo a los usuarios con cualquier rol de contratista se les pueden asignar turnos de trabajo.";
-    public static String INVALID_SCHEDULE_ASSIGNMENT = "El horario ${scheduleName} no se le puede asignar a un usuario con el rol de ${roleName}.";
+    public static final String INVALID_FILE_EXTENSION = "The file extension must be \".csv\".";
+    public static final String USER_NOT_FOUND = "No existe un contratista con identificación ${identification}.";
+    public static final String SCHEDULE_NOT_FOUND = "No existe un horario con nombre ${scheduleName}.";
+    public static final String INVALID_DATE_FORMAT = "La fecha debe ser en el formato \"yyyy-mm-dd\".";
+    public static final String INVALID_START_DATE = "La fecha de inicio no puede ser menor o igual a la fecha actual.";
+    public static final String INVALID_END_DATE = "La fecha de finalización no puede ser menor a la fecha de inicio.";
+    public static final String INVALID_ROLE_ASSIGNMENT = "Solo a los usuarios con cualquier rol de contratista se les pueden asignar turnos de trabajo.";
+    public static final String INVALID_SCHEDULE_ASSIGNMENT = "El horario ${scheduleName} no se le puede asignar a un usuario con el rol de ${roleName}.";
 
     public static String getInvalidFileExtension() {
         return INVALID_FILE_EXTENSION;

@@ -39,7 +39,6 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
     private final IRoleRepository roleRepository;
     private final IScheduleRepository scheduleRepository;
     private final IUserRepository userRepository;
-    private final IWorkShiftRepository workShiftRepository;
     private final HolidayService holidayService;
     private final CsvRowToCsvFileWorkShiftRequestDTOMapper csvRowToCsvFileWorkShiftRequestDTOMapper;
     private final SingleWorkShiftRequestDTOToWorkShiftEntityMapper singleWorkShiftRequestDTOToWorkShiftEntityMapper;
@@ -50,7 +49,6 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
             IRoleRepository roleRepository,
             IScheduleRepository scheduleRepository,
             IUserRepository userRepository,
-            IWorkShiftRepository workShiftRepository,
             HolidayService holidayService,
             CsvRowToCsvFileWorkShiftRequestDTOMapper csvRowToCsvFileWorkShiftRequestDTOMapper,
             SingleWorkShiftRequestDTOToWorkShiftEntityMapper singleWorkShiftRequestDTOToWorkShiftEntityMapper
@@ -59,7 +57,6 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
         this.roleRepository = roleRepository;
         this.scheduleRepository = scheduleRepository;
         this.userRepository = userRepository;
-        this.workShiftRepository = workShiftRepository;
         this.holidayService = holidayService;
         this.csvRowToCsvFileWorkShiftRequestDTOMapper = csvRowToCsvFileWorkShiftRequestDTOMapper;
         this.singleWorkShiftRequestDTOToWorkShiftEntityMapper = singleWorkShiftRequestDTOToWorkShiftEntityMapper;
@@ -193,9 +190,7 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
                 existingWorkShift.setSchedule(
                         ScheduleEntity.builder().scheduleId(workShiftRequest.getScheduleId()).build()
                 );
-                existingWorkShift.setUser(
-                        UserEntity.builder().userId(workShiftRequest.getUserId()).build()
-                );
+                existingWorkShift.setUserId(workShiftRequest.getUserId());
                 existingWorkShift.setIsStarted(false);
 
                 this.csvFileWorkShiftResponseDTO.incrementUpdatesCount(

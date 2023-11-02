@@ -1,9 +1,6 @@
 package com.segurosbolivar.sanyuschedulingapp.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,6 +8,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class CsvFileWorkShiftResponseDTO {
 
     private Integer insertsCount;

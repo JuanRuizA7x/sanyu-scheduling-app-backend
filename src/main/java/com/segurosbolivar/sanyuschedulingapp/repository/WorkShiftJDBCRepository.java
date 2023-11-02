@@ -3,7 +3,6 @@ package com.segurosbolivar.sanyuschedulingapp.repository;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.AssignedWorkShiftResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.dto.response.WorkShiftReportResponseDTO;
 import com.segurosbolivar.sanyuschedulingapp.entity.ScheduleEntity;
-import com.segurosbolivar.sanyuschedulingapp.entity.UserEntity;
 import com.segurosbolivar.sanyuschedulingapp.entity.WorkShiftEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,9 +14,10 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class WorkShiftJDBCRepository {
@@ -39,7 +39,7 @@ public class WorkShiftJDBCRepository {
                 sqlCommand,
                 workShift.getDate(),
                 workShift.getSchedule().getScheduleId(),
-                workShift.getUser().getUserId(),
+                workShift.getUserId(),
                 workShift.getIsStarted()
         );
 
@@ -62,7 +62,7 @@ public class WorkShiftJDBCRepository {
                 sqlCommand,
                 workShift.getDate(),
                 workShift.getSchedule().getScheduleId(),
-                workShift.getUser().getUserId(),
+                workShift.getUserId(),
                 workShift.getIsStarted(),
                 workShift.getWorkShiftId()
         );
@@ -80,10 +80,10 @@ public class WorkShiftJDBCRepository {
 
         RowMapper<WorkShiftEntity> rowMapper = (rs, rowNum) -> {
             return WorkShiftEntity.builder()
-                    .workShiftId(rs.getLong(1)) // Change index from 0 to 1
+                    .workShiftId(rs.getLong(1))
                     .date(rs.getObject(2, LocalDateTime.class))
                     .schedule(ScheduleEntity.builder().scheduleId(rs.getLong(3)).build())
-                    .user(UserEntity.builder().userId(rs.getLong(4)).build())
+                    .userId(rs.getLong(4))
                     .isStarted(rs.getBoolean(5))
                     .creationDate(rs.getObject(6, LocalDateTime.class))
                     .lastModificationDate(rs.getObject(7, LocalDateTime.class))

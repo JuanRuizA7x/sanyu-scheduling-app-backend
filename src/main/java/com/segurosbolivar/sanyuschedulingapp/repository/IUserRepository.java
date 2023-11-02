@@ -27,7 +27,6 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
                     """,
             nativeQuery = true
     )
-    @Override
     Optional<UserEntity> findById(@NotNull @Param("userId") Long userId);
 
     @Query(
