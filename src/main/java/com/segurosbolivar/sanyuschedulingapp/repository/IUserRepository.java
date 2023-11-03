@@ -93,6 +93,11 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
                     SELECT * FROM "USER"
                     WHERE IDENTIFICATION_NUMBER LIKE (:identificationNumber || '%')
                     AND IS_ACTIVE = :isActive
+                    AND ROLE_ID NOT IN (
+                        SELECT ROLE_ID
+                        FROM ROLE
+                        WHERE NAME = 'Administrador'
+                    )
                     """,
             nativeQuery = true
     )

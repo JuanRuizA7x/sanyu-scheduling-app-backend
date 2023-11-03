@@ -82,7 +82,6 @@ public class WorkShiftReportService implements IWorkShiftReportService {
     @Override
     public void generateAutomaticReport() {
 
-        System.out.println("[" + LocalDateTime.now() + "] - Entró al método automático");
         String currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         List<HolidayResponseDTO> holidaysList = this.holidayService.getHolidaysByYearAndCountryCode(
                 LocalDateTime.now().getYear(), "CO"
@@ -99,8 +98,6 @@ public class WorkShiftReportService implements IWorkShiftReportService {
         }
 
         if(isBusinessDay) {
-
-            System.out.println("[" + LocalDateTime.now() + "] - Se empezó a ejecutar el método automático");
 
             RoleEntity role = this.roleRepository.findByName(RoleEnum.ADMINISTRATOR.getDescription())
                     .orElseThrow(() -> new RoleException(
@@ -130,8 +127,6 @@ public class WorkShiftReportService implements IWorkShiftReportService {
                     csvReportName,
                     csvReport
             );
-
-            System.out.println("[" + LocalDateTime.now() + "] - Se ejecutó el método automático");
 
         }
 
