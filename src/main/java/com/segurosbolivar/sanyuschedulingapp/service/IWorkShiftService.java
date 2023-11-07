@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface IWorkShiftService {
 
-    List<WorkShiftResponseDTO> findAllByUserIdAndStartDate(Long userId, LocalDateTime startDate);
-    WorkShiftResponseDTO findByWorkShiftId(Long workShiftId);
     int assignMultipleWorkShifts(MultipleWorkShiftsRequestDTO multipleWorkShiftsRequestDTO);
     List<WorkShiftResponseDTO> findByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate);
+    List<WorkShiftResponseDTO> findByEmailAndDateRange(String email, LocalDateTime startDate, LocalDateTime endDate);
+    void markWorkShiftAsStarted(Long workShiftId);
 
 }

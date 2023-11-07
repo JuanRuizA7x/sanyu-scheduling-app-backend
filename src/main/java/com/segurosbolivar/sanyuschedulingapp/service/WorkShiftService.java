@@ -55,16 +55,6 @@ public class WorkShiftService implements IWorkShiftService {
         this.workShiftJDBCRepository = workShiftJDBCRepository;
     }
 
-    @Override
-    public List<WorkShiftResponseDTO> findAllByUserIdAndStartDate(Long userId, LocalDateTime startDate) {
-        return null;
-    }
-
-    @Override
-    public WorkShiftResponseDTO findByWorkShiftId(Long workShiftId) {
-        return null;
-    }
-
     @Transactional
     @Override
     public int assignMultipleWorkShifts(MultipleWorkShiftsRequestDTO workShifts) {
@@ -113,6 +103,28 @@ public class WorkShiftService implements IWorkShiftService {
         return this.workShiftEntityToWorkShiftResponseDTOMapper.map(
                 this.workShiftRepository.findByUserIdAndDateRange(userId, formattedStartDate, formattedEndDate)
         );
+
+    }
+
+    @Override
+    public List<WorkShiftResponseDTO> findByEmailAndDateRange(String email, LocalDateTime startDate, LocalDateTime endDate) {
+
+        UserResponseDTO user = this.userService.findByEmail(email);
+
+        return findByUserIdAndDateRange(user.getUserId(), startDate, endDate);
+
+    }
+
+    @Override
+    public void markWorkShiftAsStarted(Long workShiftId) {
+
+        this.workShiftRepository.findById(workShiftId)
+                .orElseThrow(() -> new WorkShiftException(
+                        WorkShiftExceptionMessage.getWorkShiftNotFound(),
+                        HttpStatus.NOT_FOUND
+                ));
+
+        this.workShiftJDBCRepository.markWorkShiftAsStarted(workShiftId);
 
     }
 

@@ -103,12 +103,30 @@ public class WorkShiftJDBCRepository {
     public Integer countByUserIdAndDateRange(Long userId, Date startDate, Date endDate) {
 
         String sqlCommand = """
-            SELECT COUNT(*) FROM WORK_SHIFT
-            WHERE USER_ID = ?
-            AND "DATE" BETWEEN ? AND ?
-        """;
+                    SELECT COUNT(*) FROM WORK_SHIFT
+                    WHERE USER_ID = ?
+                    AND "DATE" BETWEEN ? AND ?
+                """;
 
         return jdbcTemplate.queryForObject(sqlCommand, Integer.class, userId, startDate, endDate);
+
+    }
+
+    public void markWorkShiftAsStarted(Long workShiftId) {
+
+        String sqlCommand = """
+                    UPDATE WORK_SHIFT
+                    SET
+                        IS_STARTED = 1,
+                        STARTED_AT = CURRENT_TIMESTAMP,
+                        LAST_MODIFICATION_DATE = CURRENT_TIMESTAMP
+                    WHERE WORK_SHIFT_ID = ?
+                """;
+
+        this.jdbcTemplate.update(
+                sqlCommand,
+                workShiftId
+        );
 
     }
 
