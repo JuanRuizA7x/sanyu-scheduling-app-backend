@@ -11,6 +11,15 @@ import java.util.List;
 
 public class CsvGenerator {
 
+    /**
+     * Generates a CSV file as a byte array from a list of objects using the provided headers and name mappings.
+     *
+     * @param dataList     The list of objects to convert to CSV.
+     * @param headers      An array of header strings for the CSV columns.
+     * @param nameMapping  An array of property name mappings for the objects.
+     * @param <T>          The type of objects in the list.
+     * @return A byte array containing the CSV data.
+     */
     public static <T> byte[] generateCsv(List<T> dataList, String[] headers, String[] nameMapping) {
 
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {

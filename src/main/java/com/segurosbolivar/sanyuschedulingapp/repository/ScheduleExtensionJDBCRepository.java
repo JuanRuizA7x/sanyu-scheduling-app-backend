@@ -13,6 +13,11 @@ public class ScheduleExtensionJDBCRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Save a ScheduleExtensionEntity to the database.
+     *
+     * @param scheduleExtension The ScheduleExtensionEntity to be saved to the database.
+     */
     public void save(ScheduleExtensionEntity scheduleExtension) {
 
         String sqlCommand = """

@@ -21,6 +21,12 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * Find a user by their email address.
+     *
+     * @param email The email address of the user to retrieve.
+     * @return A UserResponseDTO object representing the user with the specified email.
+     */
     @GetMapping("/email/{email}")
     public ResponseEntity<UserResponseDTO> findUserByEmail(@PathVariable  String email) {
         UserResponseDTO user = this.userService.findByEmail(email);

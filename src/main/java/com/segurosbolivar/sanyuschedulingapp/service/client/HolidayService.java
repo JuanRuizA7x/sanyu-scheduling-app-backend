@@ -20,6 +20,13 @@ public class HolidayService {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Retrieves a list of holidays for a specific year and country code from an external holiday API.
+     *
+     * @param year The year for which to retrieve holidays.
+     * @param countryCode The country code for which to retrieve holidays (e.g., "CO").
+     * @return A list of HolidayResponseDTO objects representing the retrieved holidays.
+     */
     public List<HolidayResponseDTO> getHolidaysByYearAndCountryCode(Integer year, String countryCode) {
         String requestUrl = this.apiURL + "/api/v3/publicholidays/" + year + "/" + countryCode;
         HolidayResponseDTO[] response = restTemplate.getForObject(requestUrl, HolidayResponseDTO[].class);

@@ -12,6 +12,11 @@ public class CorsConfiguration {
     @Value("${frontend.url}")
     private String frontendUrl;
 
+    /**
+     * Configures CORS to allow requests from the specified frontend URL and allows all HTTP methods for all endpoints under "/api".
+     *
+     * @return A WebMvcConfigurer instance with the CORS configuration.
+     */
     @Bean
     public WebMvcConfigurer corsConfigurator() {
         return new WebMvcConfigurer() {

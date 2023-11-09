@@ -26,6 +26,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.jwtProvider = jwtProvider;
     }
 
+    /**
+     * Attempt user authentication with username and password.
+     *
+     * This method is called when a user attempts to authenticate by providing a username and password.
+     * It reads the user's credentials from the request, creates an authentication token,
+     * and passes it to the authentication manager for verification.
+     *
+     * @param request The HTTP request containing user credentials.
+     * @param response The HTTP response.
+     * @return The authentication result after verifying the user's credentials.
+     * @throws AuthenticationException If there is an issue with user authentication.
+     */
     @Override
     public Authentication attemptAuthentication(
             HttpServletRequest request,
@@ -50,6 +62,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     }
 
+    /**
+     * Handle successful user authentication.
+     *
+     * This method is called after a user's authentication is successful.
+     * It generates a JWT token, prepares the HTTP response,
+     * and sends the token along with a success message to the user.
+     *
+     * @param request The HTTP request.
+     * @param response The HTTP response.
+     * @param chain The filter chain.
+     * @param authResult The authentication result after successful authentication.
+     * @throws IOException If there is an issue with I/O operations.
+     * @throws ServletException If there is an issue with handling the servlet request.
+     */
     @Override
     protected void successfulAuthentication(
             HttpServletRequest request,

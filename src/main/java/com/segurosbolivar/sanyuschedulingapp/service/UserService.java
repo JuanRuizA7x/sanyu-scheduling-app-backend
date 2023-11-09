@@ -32,6 +32,13 @@ public class UserService implements IUserService {
         this.userEntityToUserResponseDTOMapper = userEntityToUserResponseDTOMapper;
     }
 
+    /**
+     * Find a user by their user ID.
+     *
+     * @param userId The unique user ID.
+     * @return UserResponseDTO containing user information.
+     * @throws UserException if the user is not found.
+     */
     @Override
     public UserResponseDTO findByUserId(Long userId) {
 
@@ -45,6 +52,13 @@ public class UserService implements IUserService {
 
     }
 
+    /**
+     * Find a user by their email address.
+     *
+     * @param email The email address of the user.
+     * @return UserResponseDTO containing user information.
+     * @throws UserException if the user is not found.
+     */
     @Override
     public UserResponseDTO findByEmail(String email) {
 
@@ -57,6 +71,14 @@ public class UserService implements IUserService {
         return this.userEntityToUserResponseDTOMapper.map(userEntity);
     }
 
+    /**
+     * Find available contractors by role within a specified date range.
+     *
+     * @param roleName   The role name of the contractors to search for.
+     * @param startDate  The start date of the date range.
+     * @param endDate    The end date of the date range.
+     * @return List of UserResponseDTO objects containing contractor information.
+     */
     @Override
     public List<UserResponseDTO> findAvailableContractorsByRoleDateRange(String roleName, LocalDateTime startDate, LocalDateTime endDate) {
 
@@ -70,6 +92,12 @@ public class UserService implements IUserService {
 
     }
 
+    /**
+     * Find users by partial identification number.
+     *
+     * @param identificationNumber The partial identification number to search for.
+     * @return List of UserResponseDTO objects matching the partial identification number.
+     */
     @Override
     public List<UserResponseDTO> findByIdentificationNumberLikeAndIsActive(String identificationNumber) {
         return this.userEntityToUserResponseDTOMapper.map(
@@ -77,6 +105,13 @@ public class UserService implements IUserService {
         );
     }
 
+    /**
+     * Find a role by its name.
+     *
+     * @param roleName The name of the role to search for.
+     * @return RoleEntity containing role information.
+     * @throws RoleException if the role is not found.
+     */
     private RoleEntity findRoleByName(String roleName) {
         return this.roleRepository.findByName(roleName)
                 .orElseThrow(() -> new RoleException(

@@ -22,6 +22,15 @@ public class MailSenderService {
     @Value("${mailjet.from-email}")
     private String fromEmail;
 
+    /**
+     * Sends an email with a CSV file attachment to one or more recipients.
+     *
+     * @param toEmails     A list of email addresses to which the email will be sent.
+     * @param subject      The subject of the email.
+     * @param textPart     The text part of the email body.
+     * @param csvFileName  The name of the CSV file to attach.
+     * @param cvsFile      The content of the CSV file as a byte array.
+     */
     public void sendEmailWithCSVAttachment(
             List<String> toEmails,
             String subject,

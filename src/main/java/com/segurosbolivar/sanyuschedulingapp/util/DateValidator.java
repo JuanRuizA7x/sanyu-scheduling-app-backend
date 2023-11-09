@@ -10,6 +10,13 @@ import java.time.LocalDateTime;
 
 public class DateValidator {
 
+    /**
+     * Validates a date range to ensure the start date is in the future and before the end date.
+     *
+     * @param startDate The start date of the range to validate.
+     * @param endDate   The end date of the range to validate.
+     * @throws WorkShiftException if the date range is invalid, such as if the start date is in the past or if the end date is before the start date.
+     */
     public static void validateDateRange(LocalDateTime startDate, LocalDateTime endDate) {
 
         Date startDateSQL = Date.valueOf(startDate.toLocalDate());

@@ -11,11 +11,11 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
-/*
-* Las consultas que se hacen a continuación están escritas con query nativo
-* ya que la tabla user entra en conflicto con una palabra reservada de Oracle,
-* por lo cual se debe especificar de esta forma: "USER"
-* */
+/**
+ * The queries made below are written with a native query
+ * because the 'user' table conflicts with an Oracle reserved word,
+ * so it must be specified in this way: "USER".
+ */
 @Repository
 public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 

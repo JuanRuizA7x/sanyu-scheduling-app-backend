@@ -28,6 +28,12 @@ public class WorkShiftJDBCRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Save a WorkShiftEntity to the database.
+     *
+     * @param workShift The WorkShiftEntity to be saved to the database.
+     * @return The number of rows affected by the insert operation.
+     */
     public int save(WorkShiftEntity workShift) {
 
         String sqlCommand = """
@@ -45,6 +51,12 @@ public class WorkShiftJDBCRepository {
 
     }
 
+    /**
+     * Update a WorkShiftEntity in the database.
+     *
+     * @param workShift The WorkShiftEntity to be updated in the database.
+     * @return The number of rows affected by the update operation.
+     */
     public int update(WorkShiftEntity workShift) {
 
         String sqlCommand = """
@@ -69,6 +81,13 @@ public class WorkShiftJDBCRepository {
 
     }
 
+    /**
+     * Queries the WORK_SHIFT table in the database to retrieve a WorkShiftEntity with the specified user ID and date. If no record is found, it returns null.
+     *
+     * @param userId The user ID for which to retrieve the WorkShiftEntity.
+     * @param date The date for which to retrieve the WorkShiftEntity.
+     * @return The retrieved WorkShiftEntity or null if no record is found.
+     */
     public WorkShiftEntity findByUserIdAndDate(Long userId, Date date) {
 
         String sqlCommand = """
@@ -100,6 +119,14 @@ public class WorkShiftJDBCRepository {
 
     }
 
+    /**
+     * Count the number of WorkShiftEntities by user ID and date range.
+     *
+     * @param userId The user ID for which to count WorkShiftEntities.
+     * @param startDate The start date of the date range.
+     * @param endDate The end date of the date range.
+     * @return The count of WorkShiftEntities.
+     */
     public Integer countByUserIdAndDateRange(Long userId, Date startDate, Date endDate) {
 
         String sqlCommand = """
@@ -112,6 +139,11 @@ public class WorkShiftJDBCRepository {
 
     }
 
+    /**
+     * Updates the specified WorkShiftEntity in the database, setting the "isStarted" flag to 1 (true) and updating the "started_at" and "lastModificationDate" fields.
+     *
+     * @param workShiftId The ID of the WorkShiftEntity to mark as started.
+     */
     public void markWorkShiftAsStarted(Long workShiftId) {
 
         String sqlCommand = """
@@ -130,6 +162,13 @@ public class WorkShiftJDBCRepository {
 
     }
 
+    /**
+     * Calls a stored procedure to retrieve assigned work shifts for the specified date. It maps the results to a list of AssignedWorkShiftResponseDTO objects.
+     *
+     * @param date The date for which to retrieve assigned work shifts.
+     * @return A WorkShiftReportResponseDTO containing a list of assigned work shifts and an error message, if applicable.
+     * @throws SQLException If there is an SQL-related error during the database operation.
+     */
     public WorkShiftReportResponseDTO getAssignedWorkShiftsByDate(Date date) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
@@ -159,6 +198,13 @@ public class WorkShiftJDBCRepository {
 
     }
 
+    /**
+     * Maps the result set from the stored procedure to a list of AssignedWorkShiftResponseDTO objects.
+     *
+     * @param arrayData The result set data to be mapped.
+     * @return A list of AssignedWorkShiftResponseDTO objects.
+     * @throws SQLException If there is an SQL-related error during the mapping process.
+     */
     private List<AssignedWorkShiftResponseDTO> mapResultSetToDTO(Object[] arrayData) throws SQLException {
 
         List<AssignedWorkShiftResponseDTO> result = new ArrayList<>();

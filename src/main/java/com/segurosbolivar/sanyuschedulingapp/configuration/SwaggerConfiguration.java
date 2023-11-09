@@ -10,6 +10,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfiguration {
 
+    /**
+     * Creates and configures an instance of OpenAPI to define the documentation for the SANYU Scheduling App. It includes information such as the application title, description, version, and licensing details. Additionally, it provides external documentation links for reference.
+     *
+     * @return An OpenAPI object representing the custom documentation for the application.
+     */
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()

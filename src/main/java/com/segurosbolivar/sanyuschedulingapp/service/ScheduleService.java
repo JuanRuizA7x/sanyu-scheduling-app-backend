@@ -25,12 +25,24 @@ public class ScheduleService implements IScheduleService {
         this.scheduleEntityToScheduleResponseDTOMapper = scheduleEntityToScheduleResponseDTOMapper;
     }
 
+    /**
+     * Retrieve a list of all schedules.
+     *
+     * @return A list of ScheduleResponseDTO representing all schedules.
+     */
     @Override
     public List<ScheduleResponseDTO> findAll() {
         return this.scheduleEntityToScheduleResponseDTOMapper
                 .map(this.scheduleRepository.findAll());
     }
 
+    /**
+     * Find a schedule by its ID.
+     *
+     * @param scheduleId The ID of the schedule to retrieve.
+     * @return The ScheduleResponseDTO representing the schedule.
+     * @throws ScheduleException if the schedule is not found.
+     */
     @Override
     public ScheduleResponseDTO findByScheduleId(Long scheduleId) {
 

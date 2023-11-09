@@ -21,6 +21,14 @@ public class ContractorController {
         this.workShiftService = workShiftService;
     }
 
+    /**
+     * Retrieve a list of work shifts for a contractor by email and date range.
+     *
+     * @param email      The email address of the contractor.
+     * @param startDate  The start date for the date range.
+     * @param endDate    The end date for the date range.
+     * @return A list of WorkShiftResponseDTO objects.
+     */
     @GetMapping("/work-shifts/email-and-date-range")
     public ResponseEntity<List<WorkShiftResponseDTO>> findByUserIdAndDateRange(
             @RequestParam String email,
@@ -33,6 +41,11 @@ public class ContractorController {
         return new ResponseEntity<List<WorkShiftResponseDTO>>(response, HttpStatus.OK);
     }
 
+    /**
+     * Notify the start of a work shift for a contractor.
+     *
+     * @param workShiftId The ID of the work shift to mark as started.
+     */
     @PutMapping("/notify-work-shift")
     public void markWorkShiftAsStarted(@RequestParam Long workShiftId) {
         this.workShiftService.markWorkShiftAsStarted(workShiftId);

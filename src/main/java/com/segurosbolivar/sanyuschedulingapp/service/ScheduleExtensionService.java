@@ -36,6 +36,11 @@ public class ScheduleExtensionService implements IScheduleExtensionService{
         this.scheduleExtensionRequestDTOToScheduleExtensionEntityMapper = scheduleExtensionRequestDTOToScheduleExtensionEntityMapper;
     }
 
+    /**
+     * Extend the schedule for a work shift.
+     *
+     * @param scheduleExtensionRequestDTO The schedule extension request data.
+     */
     @Override
     public void extendSchedule(ScheduleExtensionRequestDTO scheduleExtensionRequestDTO) {
 
@@ -53,6 +58,13 @@ public class ScheduleExtensionService implements IScheduleExtensionService{
 
     }
 
+    /**
+     * Get a work shift by its ID.
+     *
+     * @param workShiftId The ID of the work shift to retrieve.
+     * @return The WorkShiftEntity representing the work shift.
+     * @throws WorkShiftException if the work shift is not found.
+     */
     private WorkShiftEntity getWorkShift(Long workShiftId) {
         return this.workShiftRepository.findById(workShiftId)
                 .orElseThrow(() -> new WorkShiftException(
@@ -61,6 +73,12 @@ public class ScheduleExtensionService implements IScheduleExtensionService{
                 ));
     }
 
+    /**
+     * Validate the existence of a schedule extension for a work shift.
+     *
+     * @param workShiftId The ID of the work shift to check for existing extensions.
+     * @throws ScheduleExtensionException if a schedule extension already exists.
+     */
     private void validateScheduleExtensionExistence(Long workShiftId) {
 
         Integer scheduleExtensionCount = this.scheduleExtensionRepository.countByWorkShiftId(workShiftId);
@@ -74,6 +92,12 @@ public class ScheduleExtensionService implements IScheduleExtensionService{
 
     }
 
+    /**
+     * Validate the time format for start and end times.
+     *
+     * @param time The time to validate.
+     * @throws ScheduleExtensionException if the time has an invalid format.
+     */
     private void validateTimeFormat(String time) {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
@@ -90,6 +114,14 @@ public class ScheduleExtensionService implements IScheduleExtensionService{
 
     }
 
+    /**
+     * Validate the time range for the schedule extension.
+     *
+     * @param workShift The work shift to extend.
+     * @param startTime The start time of the extension.
+     * @param endTime The end time of the extension.
+     * @throws ScheduleExtensionException if the time range is invalid.
+     */
     private void validateTimeRange(WorkShiftEntity workShift, String startTime, String endTime) {
 
         String[] splitStartTime = startTime.split(":");

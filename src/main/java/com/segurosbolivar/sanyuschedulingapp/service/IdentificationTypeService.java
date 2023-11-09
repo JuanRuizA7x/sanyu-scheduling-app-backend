@@ -25,12 +25,24 @@ public class IdentificationTypeService implements IIdentificationTypeService {
         this.identificationTypeEntityToIdentificationTypeResponseDTOMapper = identificationTypeEntityToIdentificationTypeResponseDTOMapper;
     }
 
+    /**
+     * Retrieve a list of all identification types.
+     *
+     * @return A list of IdentificationTypeResponseDTO objects representing all identification types.
+     */
     @Override
     public List<IdentificationTypeResponseDTO> findAll() {
         return this.identificationTypeEntityToIdentificationTypeResponseDTOMapper
                 .map(this.identificationTypeRepository.findAll());
     }
 
+    /**
+     * Retrieve an identification type by its ID.
+     *
+     * @param identificationTypeId The ID of the identification type to retrieve.
+     * @return An IdentificationTypeResponseDTO representing the identification type with the specified ID.
+     * @throws IdentificationTypeException if the identification type is not found.
+     */
     @Override
     public IdentificationTypeResponseDTO findByIdentificationTypeId(Long identificationTypeId) {
 

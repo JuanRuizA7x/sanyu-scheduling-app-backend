@@ -28,6 +28,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+    /**
+     * Perform authorization based on JWT token.
+     *
+     * This method is called to perform authorization based on the JWT token provided in the HTTP request's "Authorization" header.
+     * If a valid JWT token is found, it is used to authenticate the user and set the user's security context.
+     *
+     * @param request The HTTP request.
+     * @param response The HTTP response.
+     * @param filterChain The filter chain for processing the request.
+     * @throws ServletException If there is an issue with handling the servlet request.
+     * @throws IOException If there is an issue with I/O operations.
+     */
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,

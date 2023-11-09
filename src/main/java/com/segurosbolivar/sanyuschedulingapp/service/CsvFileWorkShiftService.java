@@ -62,6 +62,14 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
         this.singleWorkShiftRequestDTOToWorkShiftEntityMapper = singleWorkShiftRequestDTOToWorkShiftEntityMapper;
     }
 
+    /**
+     * Process a CSV file containing work shift data.
+     *
+     * This method processes a CSV file uploaded by the user, validates the data, and assigns work shifts accordingly.
+     *
+     * @param csvFile The CSV file containing work shift data.
+     * @return A response containing information about the number of inserts, updates, and errors.
+     */
     @Transactional
     @Override
     public CsvFileWorkShiftResponseDTO processCsvFile(MultipartFile csvFile) {
@@ -82,6 +90,14 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
 
     }
 
+    /**
+     * Process a single row of CSV data.
+     *
+     * This method processes a single row of CSV data, validates the content, and assigns work shifts.
+     *
+     * @param csvFileWorkShiftRequestDTO The CSV data to process.
+     * @param row The row number in the CSV file.
+     */
     private void processCsvRow(CsvFileWorkShiftRequestDTO csvFileWorkShiftRequestDTO, int row) {
 
         UserEntity user = getUserByIdentificationTypeAndIdentificationNumber(
@@ -137,6 +153,14 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
 
     }
 
+    /**
+     * Read data from a CSV file.
+     *
+     * This method reads data from the provided CSV file and maps it to DTOs for processing.
+     *
+     * @param csvFile The CSV file to read.
+     * @return A list of DTOs representing the data from the CSV file.
+     */
     private List<CsvFileWorkShiftRequestDTO> readCsvFile(MultipartFile csvFile) {
 
         List<CsvFileWorkShiftRequestDTO> csvFileWorkShiftRequestDTOList = new ArrayList<>();
@@ -160,6 +184,14 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
 
     }
 
+    /**
+     * Assign a work shift based on the provided work shift request.
+     *
+     * This method assigns a work shift based on the provided `SingleWorkShiftRequestDTO` and checks for holidays.
+     *
+     * @param workShiftRequest The work shift request to process and assign.
+     * @param holidays List of holidays to consider when assigning work shifts.
+     */
     private void assignWorkShift(SingleWorkShiftRequestDTO workShiftRequest, List<String> holidays) {
 
         WorkShiftEntity existingWorkShift = this.workShiftJDBCRepository.findByUserIdAndDate(
@@ -203,6 +235,16 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
 
     }
 
+    /**
+     * Retrieve a list of holidays for a given date range and country code.
+     *
+     * This method retrieves a list of holidays within a specified date range and for a given country code.
+     *
+     * @param startYear The start year for the date range.
+     * @param endYear The end year for the date range.
+     * @param countryCode The country code for which to retrieve holidays.
+     * @return A list of holiday dates.
+     */
     private List<String> getHolidays(int startYear, int endYear, String countryCode) {
 
         List<HolidayResponseDTO> holidays = new ArrayList<>();
@@ -218,6 +260,16 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
 
     }
 
+    /**
+     * Retrieve a user by identification type and identification number.
+     *
+     * This method retrieves a user by their identification type and number and validates the user's existence.
+     *
+     * @param identificationType The identification type of the user.
+     * @param identificationNumber The identification number of the user.
+     * @param row The row number in the CSV file (for error reporting).
+     * @return The UserEntity object representing the user if found, or null if not found.
+     */
     private UserEntity getUserByIdentificationTypeAndIdentificationNumber(
             String identificationType, String identificationNumber, int row
     ) {
@@ -234,6 +286,15 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
 
     }
 
+    /**
+     * Retrieve a schedule by name.
+     *
+     * This method retrieves a schedule by its name and validates the schedule's existence.
+     *
+     * @param name The name of the schedule to retrieve.
+     * @param row The row number in the CSV file (for error reporting).
+     * @return The ScheduleEntity object representing the schedule if found, or null if not found.
+     */
     private ScheduleEntity getScheduleByName(String name, int row) {
 
         ScheduleEntity schedule = this.scheduleRepository.findByName(
@@ -246,6 +307,16 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
 
     }
 
+    /**
+     * Validate the existence of a user.
+     *
+     * This method checks if a user exists and, if not, adds an error to the response.
+     *
+     * @param user The UserEntity object to validate.
+     * @param identificationType The identification type used for error reporting.
+     * @param identificationNumber The identification number used for error reporting.
+     * @param row The row number in the CSV file (for error reporting).
+     */
     private void validateUser(UserEntity user, String identificationType, String identificationNumber, int row) {
         if(user == null) {
 
@@ -261,6 +332,15 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
         }
     }
 
+    /**
+     * Validate the existence of a schedule.
+     *
+     * This method checks if a schedule exists and, if not, adds an error to the response.
+     *
+     * @param schedule The ScheduleEntity object to validate.
+     * @param name The name of the schedule used for error reporting.
+     * @param row The row number in the CSV file (for error reporting).
+     */
     private void validateSchedule(ScheduleEntity schedule, String name, int row) {
         if(schedule == null) {
 
@@ -274,6 +354,16 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
         }
     }
 
+    /**
+     * Validate the date range for work shifts.
+     *
+     * This method checks if the date range for work shifts is valid and adds errors to the response if not.
+     *
+     * @param startDate The start date of the date range.
+     * @param endDate The end date of the date range.
+     * @param row The row number in the CSV file (for error reporting).
+     * @return True if the date range is valid, false otherwise.
+     */
     private boolean validateDateRange(LocalDateTime startDate, LocalDateTime endDate, int row) {
 
         Date startDateSQL = Date.valueOf(startDate.toLocalDate());
@@ -307,6 +397,16 @@ public class CsvFileWorkShiftService implements ICsvFileWorkShiftService {
 
     }
 
+    /**
+     * Validate the compatibility of role and schedule.
+     *
+     * This method checks if the role and schedule are compatible and adds errors to the response if not.
+     *
+     * @param user The UserEntity object representing the user's role.
+     * @param schedule The ScheduleEntity object representing the schedule.
+     * @param row The row number in the CSV file (for error reporting).
+     * @return True if the role and schedule are compatible, false otherwise.
+     */
     private boolean validateRoleAndScheduleCompatibility(UserEntity user, ScheduleEntity schedule, int row) {
 
         RoleEntity role = this.roleRepository.findById(user.getRole().getRoleId()).orElse(null);

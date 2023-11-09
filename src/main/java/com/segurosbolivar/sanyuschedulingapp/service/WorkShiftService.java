@@ -55,6 +55,14 @@ public class WorkShiftService implements IWorkShiftService {
         this.workShiftJDBCRepository = workShiftJDBCRepository;
     }
 
+    /**
+     * Service for assigning multiple work shifts to a user within a date range.
+     *
+     * This method allows for the bulk assignment of work shifts for a specific user over a specified date range.
+     *
+     * @param workShifts The request containing information about multiple work shifts to be assigned.
+     * @return The number of work shifts successfully assigned.
+     */
     @Transactional
     @Override
     public int assignMultipleWorkShifts(MultipleWorkShiftsRequestDTO workShifts) {
@@ -94,6 +102,14 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
+    /**
+     * Find work shifts for a user within a specified date range.
+     *
+     * @param userId The ID of the user for whom work shifts are to be retrieved.
+     * @param startDate The start date of the date range.
+     * @param endDate The end date of the date range.
+     * @return A list of WorkShiftResponseDTO representing the work shifts within the date range.
+     */
     @Override
     public List<WorkShiftResponseDTO> findByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
 
@@ -106,6 +122,14 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
+    /**
+     * Find work shifts for a user by email within a specified date range.
+     *
+     * @param email The email address of the user for whom work shifts are to be retrieved.
+     * @param startDate The start date of the date range.
+     * @param endDate The end date of the date range.
+     * @return A list of WorkShiftResponseDTO representing the work shifts within the date range.
+     */
     @Override
     public List<WorkShiftResponseDTO> findByEmailAndDateRange(String email, LocalDateTime startDate, LocalDateTime endDate) {
 
@@ -115,6 +139,11 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
+    /**
+     * Mark a work shift as started.
+     *
+     * @param workShiftId The ID of the work shift to mark as started.
+     */
     @Override
     public void markWorkShiftAsStarted(Long workShiftId) {
 
@@ -128,6 +157,13 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
+    /**
+     * Assign a single work shift to a user on a specified date, given the list of holidays.
+     *
+     * @param workShift The request containing information about a single work shift.
+     * @param holidays List of holidays.
+     * @return The number of work shifts successfully assigned (0 if the date is a holiday or weekend).
+     */
     private int assignSingleWorkShift(SingleWorkShiftRequestDTO workShift, List<String> holidays) {
 
         String workShiftDate = workShift.getDate().toLocalDate().toString();
@@ -147,6 +183,14 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
+    /**
+     * Get a list of holidays for a given date range and country code.
+     *
+     * @param startYear The start year of the date range.
+     * @param endYear The end year of the date range.
+     * @param countryCode The country code for which to retrieve holidays.
+     * @return A list of holiday dates as strings.
+     */
     private List<String> getHolidays(int startYear, int endYear, String countryCode) {
 
         List<HolidayResponseDTO> holidays = new ArrayList<>();
@@ -162,6 +206,14 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
+    /**
+     * Validate the availability of work shifts within a specified date range for a user.
+     *
+     * @param userId The ID of the user.
+     * @param startDate The start date of the date range.
+     * @param endDate The end date of the date range.
+     * @throws WorkShiftException if the date range is not available for assignment.
+     */
     private void validateDateRangeAvailability(Long userId, Date startDate, Date endDate) {
 
         Integer assignedWorkShiftsCount = this.workShiftJDBCRepository.countByUserIdAndDateRange(userId, startDate, endDate);
@@ -175,6 +227,13 @@ public class WorkShiftService implements IWorkShiftService {
 
     }
 
+    /**
+     * Validate the compatibility of a user's role and schedule for work shift assignment.
+     *
+     * @param roleName The name of the user's role.
+     * @param scheduleName The name of the schedule.
+     * @throws WorkShiftException if the role and schedule are incompatible for assignment.
+     */
     private void validateRoleAndScheduleCompatibility(String roleName, String scheduleName) {
 
         if(

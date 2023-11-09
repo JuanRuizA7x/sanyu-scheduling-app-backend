@@ -11,6 +11,11 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The queries made below are written with a native query
+ * because the 'work_shift' table conflicts with an Oracle reserved word,
+ * so it must be specified in this way: "DATE".
+ */
 @Repository
 public interface IWorkShiftRepository extends JpaRepository<WorkShiftEntity, Long> {
 

@@ -78,6 +78,13 @@ public class WorkShiftReportService implements IWorkShiftReportService {
         this.mailSenderService = mailSenderService;
     }
 
+    /**
+     * Service for generating an automatic work shift report.
+     *
+     * This method is scheduled to run automatically on weekdays (Monday to Friday).
+     * It checks if the current date is a business day (not a holiday) and sends a report to administrators.
+     * The report includes information about assigned work shifts for the day.
+     */
     @Scheduled(cron = "0 0 0 ? * MON-FRI")
     @Override
     public void generateAutomaticReport() {
@@ -132,6 +139,12 @@ public class WorkShiftReportService implements IWorkShiftReportService {
 
     }
 
+    /**
+     * Service for generating a manual work shift report and sending it to the specified email.
+     *
+     * @param toEmail The email address where the report will be sent.
+     * @param date The date for which the report should be generated.
+     */
     @Override
     public void generateManualReport(String toEmail, LocalDateTime date) {
 
@@ -161,6 +174,13 @@ public class WorkShiftReportService implements IWorkShiftReportService {
 
     }
 
+    /**
+     * Retrieve assigned work shifts for a specific date.
+     *
+     * @param date The date for which assigned work shifts should be retrieved.
+     * @return WorkShiftReportResponseDTO containing information about assigned work shifts.
+     * @throws WorkShiftException if an error occurs while retrieving work shifts.
+     */
     private WorkShiftReportResponseDTO getAssignedWorkShiftsByDate(LocalDateTime date) {
 
         WorkShiftReportResponseDTO response = null;

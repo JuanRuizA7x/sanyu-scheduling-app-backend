@@ -11,6 +11,12 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Handle exceptions of type IdentificationTypeException.
+     *
+     * @param identificationTypeException The exception to handle.
+     * @return A ResponseEntity with an error message and HTTP status code.
+     */
     @ExceptionHandler(IdentificationTypeException.class)
     public ResponseEntity<Map<String, String>> identificationTypeExceptionHandler(IdentificationTypeException identificationTypeException) {
         Map<String, String> response = new HashMap<>();
@@ -18,6 +24,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<Map<String, String>>(response, identificationTypeException.getHttpStatus());
     }
 
+    /**
+     * Handle exceptions of type RoleException.
+     *
+     * @param roleException The exception to handle.
+     * @return A ResponseEntity with an error message and HTTP status code.
+     */
     @ExceptionHandler(RoleException.class)
     public ResponseEntity<Map<String, String>> roleExceptionHandler(RoleException roleException) {
         Map<String, String> response = new HashMap<>();
@@ -25,6 +37,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<Map<String, String>>(response, roleException.getHttpStatus());
     }
 
+    /**
+     * Handle exceptions of type ScheduleException.
+     *
+     * @param scheduleException The exception to handle.
+     * @return A ResponseEntity with an error message and HTTP status code.
+     */
     @ExceptionHandler(ScheduleException.class)
     public ResponseEntity<Map<String, String>> scheduleExceptionHandler(ScheduleException scheduleException) {
         Map<String, String> response = new HashMap<>();
@@ -32,6 +50,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<Map<String, String>>(response, scheduleException.getHttpStatus());
     }
 
+    /**
+     * Handle exceptions of type ScheduleExtensionException.
+     *
+     * @param scheduleExtensionException The exception to handle.
+     * @return A ResponseEntity with an error message and HTTP status code.
+     */
     @ExceptionHandler(ScheduleExtensionException.class)
     public ResponseEntity<Map<String, String>> scheduleExtensionExceptionHandler(ScheduleExtensionException scheduleExtensionException) {
         Map<String, String> response = new HashMap<>();
@@ -39,6 +63,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<Map<String, String>>(response, scheduleExtensionException.getHttpStatus());
     }
 
+    /**
+     * Handle exceptions of type UserException.
+     *
+     * @param userException The exception to handle.
+     * @return A ResponseEntity with an error message and HTTP status code.
+     */
     @ExceptionHandler(UserException.class)
     public ResponseEntity<Map<String, String>> userExceptionHandler(UserException userException) {
         Map<String, String> response = new HashMap<>();
@@ -46,6 +76,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<Map<String, String>>(response, userException.getHttpStatus());
     }
 
+    /**
+     * Handle exceptions of type WorkShiftException.
+     *
+     * @param workShiftException The exception to handle.
+     * @return A ResponseEntity with an error message and HTTP status code.
+     */
     @ExceptionHandler(WorkShiftException.class)
     public ResponseEntity<Map<String, String>> workShiftExceptionHandler(WorkShiftException workShiftException) {
         Map<String, String> response = new HashMap<>();
@@ -53,6 +89,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<Map<String, String>>(response, workShiftException.getHttpStatus());
     }
 
+    /**
+     * Handle general exceptions of type Exception.
+     *
+     * @param exception The general exception to handle.
+     * @return A ResponseEntity with an error message and the HTTP status code set to INTERNAL_SERVER_ERROR.
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> exceptionHandler(Exception exception) {
         Map<String, String> response = new HashMap<>();

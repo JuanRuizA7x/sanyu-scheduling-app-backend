@@ -43,6 +43,14 @@ public class SecurityConfiguration {
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
     }
 
+    /**
+     * Configures the security filter chain for the application.
+     *
+     * @param httpSecurity          The HttpSecurity object for configuring security.
+     * @param authenticationManager The AuthenticationManager for handling authentication.
+     * @return A SecurityFilterChain with configured security settings.
+     * @throws Exception If an exception occurs during configuration.
+     */
     @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity httpSecurity,
@@ -71,6 +79,12 @@ public class SecurityConfiguration {
 
     }
 
+    /**
+     * Configures the authentication manager for the application.
+     *
+     * @param passwordEncoder The PasswordEncoder for encoding passwords.
+     * @return An AuthenticationManager with configured authentication settings.
+     */
     @Bean
     public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -79,18 +93,32 @@ public class SecurityConfiguration {
         return new ProviderManager(authenticationProvider);
     }
 
+    /**
+     * Provides a PasswordEncoder for encoding passwords using BCrypt.
+     *
+     * @return A BCryptPasswordEncoder for password encoding.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    //Encriptador personalizado que devuelve la contraseña sin encriptar para facilitar las pruebas
-    /**@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new NoOpPasswordEncoder();
-    }*/
+    /**
+     * Provides a custom encryptor that does not encrypt passwords for easy testing
+     *
+     * @return A NoOpPasswordEncoder for password encoding.
+     */
+    //@Bean
+    //public PasswordEncoder customPasswordEncoder() {
+    //    return new NoOpPasswordEncoder();
+    //}
 
-    // Se ejecuta de manera individual para encriptar la contraseña que se desee
+    /**
+     * Main method to execute individually for encrypting a specific password.
+     * Prints the BCrypt hash of the password for testing or encryption purposes.
+     *
+     * @param args The command-line arguments (not used).
+     */
     public static void main(String[] args) {
         System.out.println("[" + new BCryptPasswordEncoder().encode("12345") + "]");
     }
